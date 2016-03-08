@@ -8,8 +8,9 @@ run(Method, URL, Headers, Body, _Options) ->
   case find_controler(
          bucs:to_atom(string:to_upper(bucs:to_string(Method))),
          URL) of
-    {{Handler, Function}, Bindings, Query} -> 
-      Req = wok_test_req:new(URL, Headers, Body, Query, Bindings, []),
+    {{Handler, Function}, URL1, Bindings, Query} -> 
+      Req = wok_test_req:new(bucs:to_binary(string:to_upper(bucs:to_string(Method))), 
+                             URL1, Headers, Body, Query, Bindings, []),
       Req1 = erlang:apply(Handler, Function, [Req]),
       wok_req:reply(Req1);
     not_found ->
@@ -17,16 +18,22 @@ run(Method, URL, Headers, Body, _Options) ->
   end.
 
 find_controler(Method, URL) ->
-  {Path1, Query1} = case http_uri:parse(bucs:to_string(URL)) of
-                      {ok, {_, _, _, _, Path, Query}} -> {string:tokens(bucs:to_string(Path), "/"), Query};
-                      {ok, {_, _, _, _, Path, Query, _}} -> {string:tokens(bucs:to_string(Path), "/"), Query};
-                      _ -> 
-                        case http_uri:parse("http://example.com" ++ bucs:to_string(URL)) of
-                          {ok, {_, _, _, _, Path, Query}} -> {string:tokens(bucs:to_string(Path), "/"), Query};
-                          {ok, {_, _, _, _, Path, Query, _}} -> {string:tokens(bucs:to_string(Path), "/"), Query};
-                          _ -> {string:tokens(bucs:to_string(URL), "/"), []}
-                        end
-                    end,
+  {URL1, 
+   Path1, 
+   Query1} = case http_uri:parse(bucs:to_string(URL)) of
+               {ok, {_, _, _, _, Path, Query}} -> {URL, string:tokens(bucs:to_string(Path), "/"), Query};
+               {ok, {_, _, _, _, Path, Query, _}} -> {URL, string:tokens(bucs:to_string(Path), "/"), Query};
+               _ -> 
+                 case http_uri:parse("http://example.com" ++ bucs:to_string(URL)) of
+                   {ok, {_, _, _, _, Path, Query}} -> {"http://example.com" ++ bucs:to_string(URL),
+                                                       string:tokens(bucs:to_string(Path), "/"), 
+                                                       Query};
+                   {ok, {_, _, _, _, Path, Query, _}} -> {"http://example.com" ++ bucs:to_string(URL),
+                                                          string:tokens(bucs:to_string(Path), "/"), 
+                                                          Query};
+                   _ -> {URL, string:tokens(bucs:to_string(URL), "/"), []}
+                 end
+             end,
   {Routes, _} = wok_http_handler:routes(),
   lists:foldl(fun
                 ({Route, Handlers}, Acc) when is_list(Handlers) ->
@@ -42,7 +49,7 @@ find_controler(Method, URL) ->
                                                    end, lists:zip(RouteTokens, Path1)),
                           case lists:member(notmatch, Bindings) of
                             true -> Acc;
-                            false -> {Result, Bindings, Query1}
+                            false -> {Result, URL1, Bindings, Query1}
                           end;
                         true ->
                           Acc
