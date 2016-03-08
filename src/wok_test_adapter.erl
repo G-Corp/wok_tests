@@ -8,9 +8,10 @@ run(Method, URL, Headers, Body, _Options) ->
   case find_controler(
          bucs:to_atom(string:to_upper(bucs:to_string(Method))),
          URL) of
-    {{_Handler, _Function}, Bindings, Query} -> 
+    {{Handler, Function}, Bindings, Query} -> 
       Req = wok_test_req:new(URL, Headers, Body, Query, Bindings, []),
-      wok_test_req:reply(Req);
+      Req1 = erlang:apply(Handler, Function, [Req]),
+      wok_req:reply(Req1);
     not_found ->
       {ok, 404, [], <<>>}
   end.
