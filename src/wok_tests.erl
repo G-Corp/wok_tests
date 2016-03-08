@@ -29,14 +29,17 @@
          debug/2
         ]).
 
-%% Example
-%% <pre>
-%% paris_test:request(get, "http://localhost:8080", [], "", [], fun(Response) -> ... end)
-%% </pre>
-%%
-%% {timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}} | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
-%% {sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()} | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
-
+% @doc
+% Send or simulate a HTTP request
+%
+% Example
+% <pre>
+% wok_tests:request(get, "http://localhost:8080", [], "", [], fun(Response) -> ... end)
+% </pre>
+%
+% {timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}} | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
+% {sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()} | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
+% @end
 request(Method, URL, Fun) ->
   request(Method, URL, [], <<>>, [], Fun).
 
