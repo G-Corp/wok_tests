@@ -1,10 +1,6 @@
 -module(wok_tests).
 -include_lib("eunit/include/eunit.hrl").
 
--export([
-         start/1
-        ]).
-
 % Helpers
 -export([
          create_req/3,
@@ -17,18 +13,16 @@
 % Assert
 -export([assert/1, 
          assert_not/1,
-         assert_match/2,
-         assert_not_match/2,
          assert_equal/2,
          assert_not_equal/2,
-         assert_http_ok/1,
-         assert_http_code/2,
-         assert_http_not_code/2,
-         assert_http_has_body/1,
-         assert_http_not_has_body/1,
-         assert_http_redirect/1,
-         assert_http_not_found/1,
-         assert_http_header/2
+         assert_request_ok/1,
+         assert_request_code/2,
+         assert_request_not_code/2,
+         assert_request_has_body/1,
+         assert_request_not_has_body/1,
+         assert_request_redirect/1,
+         assert_request_not_found/1,
+         assert_request_header/2
         ]).
 
 -export([
@@ -42,10 +36,6 @@
                        {version, "HTTP/1.1"}]).
 -define(OPTIONS, [{sync, true},
                   {full_result, true}]).
-
-start(AppName) ->
-  hackney:start(),
-  AppName:start().
 
 create_req(URL, Headers, Body) ->
   wok_tests_req:new(URL, Headers, Body).
@@ -67,6 +57,7 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(Body),
                                                        is_list(Options),
                                                        is_function(Fun) ->
+  _ = hackney:start(),
   Fun(case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
         {ok, StatusCode, RespHeaders, ClientRef} ->
           case hackney:body(ClientRef) of
@@ -113,44 +104,52 @@ assert(Boolean) ->
 assert_not(Boolean) ->
   ?assertNot(Boolean).
 
-assert_match(Expected, Expression) ->
-  ?assertMatch(Expected, Expression).
-
-assert_not_match(Expected, Expression) ->
-  ?assertNotMatch(Expected, Expression).
-
 assert_equal(Expected, Expression) ->
   ?assertEqual(Expected, Expression).
 
 assert_not_equal(Expected, Expression) ->
   ?assertNotEqual(Expected, Expression).
 
-assert_http_ok(Req) ->
-  Code = wok_req:get_response_code(Req),
-  assert(Code >= 200 andalso Code < 300).
+assert_request_ok({ok, Code, _, _}) ->
+  ?assert(Code >= 200 andalso Code < 300);
+assert_request_ok(_) ->
+  ?assert(false).
 
-assert_http_code(ExpectedCode, Req) ->
-  assert_equal(ExpectedCode, wok_req:get_response_code(Req)).
+assert_request_code(ExpectedCode, {ok, Code, _, _}) ->
+  ?assertEqual(ExpectedCode, Code);
+assert_request_code(_, _) ->
+  ?assert(false).
 
-assert_http_not_code(ExpectedCode, Req) ->
-  assert_not_equal(ExpectedCode, wok_req:get_response_code(Req)).
+assert_request_not_code(ExpectedCode, {ok, Code, _, _}) ->
+  ?assertNotEqual(ExpectedCode, Code);
+assert_request_not_code(_, _) ->
+  ?assert(false).
 
-assert_http_has_body(Req) ->
-  assert(<<>> =/= wok_req:get_response_body(Req)).
+assert_request_has_body({ok, _, _, Body}) ->
+  ?assert(<<>> =/= Body);
+assert_request_has_body(_) ->
+  ?assert(false).
 
-assert_http_not_has_body(Req) ->
-  assert(<<>> =:= wok_req:get_response_body(Req)).
+assert_request_not_has_body({ok, _, _, Body}) ->
+  ?assert(<<>> =:= Body);
+assert_request_not_has_body(_) ->
+  ?assert(false).
 
-assert_http_redirect(Req) ->
-  Code = wok_req:get_response_code(Req),
-  assert(Code >= 300 andalso Code < 400).
+assert_request_redirect({ok, Code, _, _}) ->
+  ?assert(Code >= 300 andalso Code < 400);
+assert_request_redirect(_) ->
+  ?assert(false).
 
-assert_http_not_found(Req) ->
-  Code = wok_req:get_response_code(Req),
-  assert(Code =:= 404).
+assert_request_not_found({ok, 404, _, _}) ->
+  ?assert(true);
+assert_request_not_found(_) ->
+  ?assert(false).
 
-assert_http_header({Header, Value}, Req) ->
-  assert(get_header(Header, wok_req:get_response_headers(Req)) =:= bucs:to_binary(Value)).
+assert_request_header({Header, Value}, {ok, _, Headers, _}) ->
+  ?assertEqual(bucs:to_binary(Value), get_header(Header, Headers));
+assert_request_header(_, _) ->
+  ?assert(false).
+
 
 debug(Fmt, Data) ->
   ?debugFmt(Fmt, Data).
