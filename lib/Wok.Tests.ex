@@ -3,9 +3,6 @@
 # Using mix.mk (https://github.com/botsunit/mix.mk)
 # MODIFY IT AT YOUR OWN RISK AND ONLY IF YOU KNOW WHAT YOU ARE DOING!
 defmodule Wok.Tests do
-	def unquote(:"start")(arg1) do
-		:erlang.apply(:"wok_tests", :"start", [arg1])
-	end
 	def unquote(:"create_req")(arg1, arg2, arg3) do
 		:erlang.apply(:"wok_tests", :"create_req", [arg1, arg2, arg3])
 	end
@@ -27,41 +24,35 @@ defmodule Wok.Tests do
 	def unquote(:"assert_not")(arg1) do
 		:erlang.apply(:"wok_tests", :"assert_not", [arg1])
 	end
-	def unquote(:"assert_match")(arg1, arg2) do
-		:erlang.apply(:"wok_tests", :"assert_match", [arg1, arg2])
-	end
-	def unquote(:"assert_not_match")(arg1, arg2) do
-		:erlang.apply(:"wok_tests", :"assert_not_match", [arg1, arg2])
-	end
 	def unquote(:"assert_equal")(arg1, arg2) do
 		:erlang.apply(:"wok_tests", :"assert_equal", [arg1, arg2])
 	end
 	def unquote(:"assert_not_equal")(arg1, arg2) do
 		:erlang.apply(:"wok_tests", :"assert_not_equal", [arg1, arg2])
 	end
-	def unquote(:"assert_http_ok")(arg1) do
-		:erlang.apply(:"wok_tests", :"assert_http_ok", [arg1])
+	def unquote(:"assert_request_ok")(arg1) do
+		:erlang.apply(:"wok_tests", :"assert_request_ok", [arg1])
 	end
-	def unquote(:"assert_http_code")(arg1, arg2) do
-		:erlang.apply(:"wok_tests", :"assert_http_code", [arg1, arg2])
+	def unquote(:"assert_request_code")(arg1, arg2) do
+		:erlang.apply(:"wok_tests", :"assert_request_code", [arg1, arg2])
 	end
-	def unquote(:"assert_http_not_code")(arg1, arg2) do
-		:erlang.apply(:"wok_tests", :"assert_http_not_code", [arg1, arg2])
+	def unquote(:"assert_request_not_code")(arg1, arg2) do
+		:erlang.apply(:"wok_tests", :"assert_request_not_code", [arg1, arg2])
 	end
-	def unquote(:"assert_http_has_body")(arg1) do
-		:erlang.apply(:"wok_tests", :"assert_http_has_body", [arg1])
+	def unquote(:"assert_request_has_body")(arg1) do
+		:erlang.apply(:"wok_tests", :"assert_request_has_body", [arg1])
 	end
-	def unquote(:"assert_http_not_has_body")(arg1) do
-		:erlang.apply(:"wok_tests", :"assert_http_not_has_body", [arg1])
+	def unquote(:"assert_request_not_has_body")(arg1) do
+		:erlang.apply(:"wok_tests", :"assert_request_not_has_body", [arg1])
 	end
-	def unquote(:"assert_http_redirect")(arg1) do
-		:erlang.apply(:"wok_tests", :"assert_http_redirect", [arg1])
+	def unquote(:"assert_request_redirect")(arg1) do
+		:erlang.apply(:"wok_tests", :"assert_request_redirect", [arg1])
 	end
-	def unquote(:"assert_http_not_found")(arg1) do
-		:erlang.apply(:"wok_tests", :"assert_http_not_found", [arg1])
+	def unquote(:"assert_request_not_found")(arg1) do
+		:erlang.apply(:"wok_tests", :"assert_request_not_found", [arg1])
 	end
-	def unquote(:"assert_http_header")(arg1, arg2, arg3) do
-		:erlang.apply(:"wok_tests", :"assert_http_header", [arg1, arg2, arg3])
+	def unquote(:"assert_request_header")(arg1, arg2) do
+		:erlang.apply(:"wok_tests", :"assert_request_header", [arg1, arg2])
 	end
 	def unquote(:"debug")(arg1, arg2) do
 		:erlang.apply(:"wok_tests", :"debug", [arg1, arg2])
