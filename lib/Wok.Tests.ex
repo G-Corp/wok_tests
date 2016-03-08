@@ -3,9 +3,6 @@
 # Using mix.mk (https://github.com/botsunit/mix.mk)
 # MODIFY IT AT YOUR OWN RISK AND ONLY IF YOU KNOW WHAT YOU ARE DOING!
 defmodule Wok.Tests do
-	def unquote(:"create_req")(arg1, arg2, arg3) do
-		:erlang.apply(:"wok_tests", :"create_req", [arg1, arg2, arg3])
-	end
 	def unquote(:"request")(arg1, arg2, arg3) do
 		:erlang.apply(:"wok_tests", :"request", [arg1, arg2, arg3])
 	end

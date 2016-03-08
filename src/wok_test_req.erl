@@ -1,9 +1,9 @@
 % @hidden
--module(wok_tests_req).
+-module(wok_test_req).
 -behaviour(wok_req).
 
 -export([
-  new/4
+  new/6
   , reply/1
   , set_cookie/4
   , get_cookies/1
@@ -21,15 +21,20 @@
   , binding_values/1
 ]).
 
-new(URL, Headers, Body, Cookies) ->
+new(URL, Headers, Body, Query, Bindings, Cookies) ->
   wok_req:set_http_req(wok_req:new(?MODULE), #{url => bucs:to_string(URL),
                                                headers => Headers,
                                                body => Body,
+                                               query => Query,
+                                               bindings => Bindings,
                                                cookies => Cookies}).
 
 -spec reply(wok_req:wok_req()) -> term().
 reply(Req) ->
-  Req.
+  {ok, 
+   wok_req:get_response_code(Req),
+   wok_req:get_response_headers(Req),
+   wok_req:get_response_body(Req)}.
 
 -spec set_cookie(wok_req:wok_req(),
                  iodata(),

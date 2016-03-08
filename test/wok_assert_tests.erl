@@ -21,6 +21,7 @@ assert_http_test_() ->
    fun(_) -> ok end,
    [
     fun() ->
+        os:putenv("HTTP_TEST", "true"),
         wok_tests:request(get, <<"http://www.google.fr">>, 
                           fun(Resp) ->
                               wok_tests:assert_request_ok(Resp),

@@ -3,7 +3,6 @@
 
 % Helpers
 -export([
-         create_req/3,
          request/3,
          request/6,
          follow/3,
@@ -30,16 +29,6 @@
          debug/2
         ]).
 
--define(HTTP_OPTIONS, [{timeout, infinity},
-                       {connect_timeout, infinity},
-                       {autoredirect, false},
-                       {version, "HTTP/1.1"}]).
--define(OPTIONS, [{sync, true},
-                  {full_result, true}]).
-
-create_req(URL, Headers, Body) ->
-  wok_tests_req:new(URL, Headers, Body).
-
 %% Example
 %% <pre>
 %% paris_test:request(get, "http://localhost:8080", [], "", [], fun(Response) -> ... end)
@@ -57,20 +46,25 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(Body),
                                                        is_list(Options),
                                                        is_function(Fun) ->
-  _ = hackney:start(),
-  Fun(case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
-        {ok, StatusCode, RespHeaders, ClientRef} ->
-          case hackney:body(ClientRef) of
-            {ok, RespBody} ->
-              {ok, StatusCode, RespHeaders, RespBody};
-            E -> 
+  case os:getenv("HTTP_TEST") of
+    "true" ->
+      _ = hackney:start(),
+      Fun(case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
+            {ok, StatusCode, RespHeaders, ClientRef} ->
+              case hackney:body(ClientRef) of
+                {ok, RespBody} ->
+                  {ok, StatusCode, RespHeaders, RespBody};
+                E -> 
+                  E
+              end;
+            {ok, StatusCode, RespHeaders} ->
+              {ok, StatusCode, RespHeaders, <<>>};
+            E ->
               E
-          end;
-        {ok, StatusCode, RespHeaders} ->
-          {ok, StatusCode, RespHeaders, <<>>};
-        E ->
-          E
-      end).
+          end);
+    _ ->
+      Fun(wok_test_adapter:run(Method, URL, Headers, Body, Options))
+  end.
 
 follow(Method, URL, Fun) ->
   case http_uri:parse(bucs:to_string(URL)) of
