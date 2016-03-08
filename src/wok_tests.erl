@@ -28,7 +28,7 @@
          assert_http_not_has_body/1,
          assert_http_redirect/1,
          assert_http_not_found/1,
-         assert_http_header/3
+         assert_http_header/2
         ]).
 
 -export([
@@ -67,7 +67,7 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(Body),
                                                        is_list(Options),
                                                        is_function(Fun) ->
-  Fun(case hackney:request(Method, eutils:to_binary(URL), Headers, eutils:to_binary(Body), Options) of
+  Fun(case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
         {ok, StatusCode, RespHeaders, ClientRef} ->
           case hackney:body(ClientRef) of
             {ok, RespBody} ->
@@ -82,15 +82,15 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
       end).
 
 follow(Method, URL, Fun) ->
-  case http_uri:parse(eutils:to_string(URL)) of
+  case http_uri:parse(bucs:to_string(URL)) of
     {ok, {Scheme, UserInfo, Host, Port, _, _}} ->
-      Base = eutils:to_binary(
+      Base = bucs:to_binary(
                case UserInfo of
-                 [] -> eutils:to_string(Scheme) ++ "://" ++ 
-                       Host ++ ":" ++ eutils:to_string(Port);
-                 _ -> eutils:to_string(Scheme) ++ "://" ++ 
+                 [] -> bucs:to_string(Scheme) ++ "://" ++ 
+                       Host ++ ":" ++ bucs:to_string(Port);
+                 _ -> bucs:to_string(Scheme) ++ "://" ++ 
                       UserInfo ++ "@" ++ 
-                      Host ++ ":" ++ eutils:to_string(Port)
+                      Host ++ ":" ++ bucs:to_string(Port)
                end),
       request(Method, URL, fun({ok, StatusCode, RespHeaders, <<>>}) when StatusCode >= 300, StatusCode < 400 ->
                                case get_header(<<"Location">>, RespHeaders) of
@@ -125,45 +125,32 @@ assert_equal(Expected, Expression) ->
 assert_not_equal(Expected, Expression) ->
   ?assertNotEqual(Expected, Expression).
 
-assert_http_ok({ok, Code, _, _}) ->
-  assert(Code >= 200 andalso Code < 300);
-assert_http_ok(_) ->
-  assert(false).
+assert_http_ok(Req) ->
+  Code = wok_req:get_response_code(Req),
+  assert(Code >= 200 andalso Code < 300).
 
-assert_http_code({ok, Code, _, _}, ExpectedCode) ->
-  assert(Code =:= ExpectedCode);
-assert_http_code(_, _) ->
-  assert(false).
+assert_http_code(ExpectedCode, Req) ->
+  assert_equal(ExpectedCode, wok_req:get_response_code(Req)).
 
-assert_http_not_code({ok, Code, _, _}, ExpectedCode) ->
-  assert(Code =/= ExpectedCode);
-assert_http_not_code(_, _) ->
-  assert(false).
+assert_http_not_code(ExpectedCode, Req) ->
+  assert_not_equal(ExpectedCode, wok_req:get_response_code(Req)).
 
-assert_http_has_body({ok, _, _, Body}) ->
-  assert(<<>> =/= Body);
-assert_http_has_body(_) ->
-  assert(false).
+assert_http_has_body(Req) ->
+  assert(<<>> =/= wok_req:get_response_body(Req)).
 
-assert_http_not_has_body({ok, _, _, Body}) ->
-  assert(<<>> =:= Body);
-assert_http_not_has_body(_) ->
-  assert(false).
+assert_http_not_has_body(Req) ->
+  assert(<<>> =:= wok_req:get_response_body(Req)).
 
-assert_http_redirect({ok, Code, _, _}) ->
-  assert(Code >= 300 andalso Code < 400);
-assert_http_redirect(_) ->
-  assert(false).
+assert_http_redirect(Req) ->
+  Code = wok_req:get_response_code(Req),
+  assert(Code >= 300 andalso Code < 400).
 
-assert_http_not_found({ok, 404, _, _}) ->
-  assert(true);
-assert_http_not_found(_) ->
-  assert(false).
+assert_http_not_found(Req) ->
+  Code = wok_req:get_response_code(Req),
+  assert(Code =:= 404).
 
-assert_http_header({ok, _, Headers, _}, Header, Value) ->
-  assert(get_header(Header, Headers) =:= eutils:to_binary(Value));
-assert_http_header(_, _, _) ->
-  assert(false).
+assert_http_header({Header, Value}, Req) ->
+  assert(get_header(Header, wok_req:get_response_headers(Req)) =:= bucs:to_binary(Value)).
 
 debug(Fmt, Data) ->
   ?debugFmt(Fmt, Data).
@@ -172,5 +159,5 @@ debug(Data) ->
   ?debugMsg(Data).
 
 get_header(Header, Headers) ->
-  elists:keyfind(eutils:to_binary(Header), 1, Headers, <<>>).
+  bucs:to_binary(buclists:keyfind(bucs:to_binary(Header), 1, Headers, <<>>)).
 
