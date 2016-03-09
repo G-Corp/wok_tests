@@ -10,7 +10,7 @@
 
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert-1">assert/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_equal-2">assert_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not-1">assert_not/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not_equal-2">assert_not_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_code-2">assert_request_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_has_body-1">assert_request_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_header-2">assert_request_header/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_code-2">assert_request_not_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_found-1">assert_request_not_found/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_has_body-1">assert_request_not_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_ok-1">assert_request_ok/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_redirect-1">assert_request_redirect/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-3">follow/3</a></td><td></td></tr><tr><td valign="top"><a href="#request-3">request/3</a></td><td> 
-Send or simulate a HTTP request.</td></tr><tr><td valign="top"><a href="#request-6">request/6</a></td><td></td></tr><tr><td valign="top"><a href="#submit-4">submit/4</a></td><td></td></tr></table>
+Send or simulate a HTTP request.</td></tr><tr><td valign="top"><a href="#request-6">request/6</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -131,10 +131,4 @@ Example
 ### request/6 ###
 
 `request(Method, URL, Headers, Body, Options, Fun) -> any()`
-
-<a name="submit-4"></a>
-
-### submit/4 ###
-
-`submit(FormName, FormValue, Assertions, Continuations) -> any()`
 

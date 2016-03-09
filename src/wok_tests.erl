@@ -5,8 +5,7 @@
 -export([
          request/3,
          request/6,
-         follow/3,
-         submit/4
+         follow/3
         ]).
 
 % Assert
@@ -91,9 +90,6 @@ follow(Method, URL, Fun) ->
     E ->
       Fun(E)
   end.
-
-submit(_FormName, _FormValue, _Assertions, _Continuations) ->
-  todo.
 
 assert(Boolean) ->
   ?assert(Boolean).

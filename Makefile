@@ -30,6 +30,11 @@ EUNIT_OPTS = verbose, {report, {eunit_surefire, [{dir, "test"}]}}
 
 include erlang.mk
 
+CP = cp
+
+docs:: edoc
+	@${CP} _doc/* doc
+
 dev: deps app
 	@erl -pa ebin include deps/*/ebin deps/*/include
 
