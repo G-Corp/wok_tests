@@ -7,15 +7,17 @@ ELIXIR_BINDINGS = wok_tests
 
 dep_mix.mk = git https://github.com/botsunit/mix.mk.git master
 
-DEPS = bucs wok_http_adapter meck hackney doteki
+DEPS = bucs wok_http_adapter hackney doteki
 dep_bucs = git https://github.com/botsunit/bucs.git master
 dep_wok_http_adapter = git git@gitlab.botsunit.com:msaas/wok_http_adapter.git master
 dep_doteki = git https://github.com/botsunit/doteki.git master
-dep_meck = git https://github.com/eproxus/meck.git master
 dep_hackney = git git://github.com/benoitc/hackney.git master
 
 DOC_DEPS = edown
 dep_edown = git https://github.com/botsunit/edown.git master
+
+TEST_DEPS = meck
+dep_meck = git https://github.com/eproxus/meck.git master
 
 EDOC_OPTS = {doclet, edown_doclet} \
 						, {app_default, "http://www.erlang.org/doc/man"} \
