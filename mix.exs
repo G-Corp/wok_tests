@@ -19,7 +19,7 @@ defmodule Wok.Tests.Mixfile do
 			{:bucs, ~r/.*/, git: "https://github.com/botsunit/bucs.git", branch: "master"},  
 			{:wok_http_adapter, ~r/.*/, git: "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", branch: "master"},  
 			{:meck, ~r/.*/, git: "https://github.com/eproxus/meck.git", branch: "master"},  
-			{:hackney, ~r/.*/, git: "https://github.com/benoitc/hackney.git", branch: "master"},  
+			{:hackney, ">= 0.12.0"},  
 			{:doteki, ~r/.*/, git: "https://github.com/botsunit/doteki.git", branch: "master"},
 		]
 	end
