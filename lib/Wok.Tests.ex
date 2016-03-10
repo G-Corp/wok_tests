@@ -12,9 +12,6 @@ defmodule Wok.Tests do
 	def unquote(:"follow")(arg1, arg2, arg3) do
 		:erlang.apply(:"wok_tests", :"follow", [arg1, arg2, arg3])
 	end
-	def unquote(:"submit")(arg1, arg2, arg3, arg4) do
-		:erlang.apply(:"wok_tests", :"submit", [arg1, arg2, arg3, arg4])
-	end
 	def unquote(:"assert")(arg1) do
 		:erlang.apply(:"wok_tests", :"assert", [arg1])
 	end

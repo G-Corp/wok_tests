@@ -16,7 +16,7 @@
 
 ERLANG_MK_FILENAME := $(realpath $(lastword $(MAKEFILE_LIST)))
 
-ERLANG_MK_VERSION = 2.0.0-pre.2-87-gec4d6d6
+ERLANG_MK_VERSION = 2.0.0-pre.2-88-g865bc1f
 
 # Core configuration.
 
@@ -1842,6 +1842,14 @@ pkg_gen_unix_homepage = https://github.com/msantos/gen_unix
 pkg_gen_unix_fetch = git
 pkg_gen_unix_repo = https://github.com/msantos/gen_unix
 pkg_gen_unix_commit = master
+
+PACKAGES += geode
+pkg_geode_name = geode
+pkg_geode_description = geohash/proximity lookup in pure, uncut erlang.
+pkg_geode_homepage = https://github.com/bradfordw/geode
+pkg_geode_fetch = git
+pkg_geode_repo = https://github.com/bradfordw/geode
+pkg_geode_commit = master
 
 PACKAGES += getopt
 pkg_getopt_name = getopt
