@@ -1,6 +1,12 @@
 -module(wok_tests).
 -include_lib("eunit/include/eunit.hrl").
 
+- export([
+          message/4,
+          message/6,
+          build_message/1
+         ]).
+
 % Helpers
 -export([
          request/3,
@@ -28,6 +34,23 @@
          debug/2
         ]).
 
+message(Topic, To, Message, Fun) ->
+  message(Topic, <<"test">>, To, [], Message, Fun).
+
+message(_Topic, _From, _To, _Headers, _Message, _Fun) ->
+  case os:getenv("KAFKA_TEST") of
+    "true" -> ok;
+    _ -> ok
+  end.
+
+build_message(Map) when is_map(Map) ->
+  wok_msg:new(
+    maps:get(from, Map, <<"from">>),
+    maps:get(to, Map, <<"to">>),
+    maps:get(headers, Map, []),
+    maps:get(body, Map, <<>>),
+    maps:get(uuid, Map, <<"5a9bea37-c811-4f09-afa0-87a33b37dff3">>)).
+  
 % @doc
 % Send or simulate a HTTP request
 %
