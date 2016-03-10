@@ -54,8 +54,8 @@ set_cookie(Req, Name, Value, _Options) ->
 get_cookies(Req) ->
   #{cookies := ReqCookies, headers := Headers} = wok_req:get_http_req(Req),
   {_, HeadCookies} = lists:keyfind(<<"cookies">>, 1, Headers),
-  HeadCookies2 = binary:replace(HeadCookies, <<" ">>, [global]),
-  HeadCookies3 = lists:foldl(fun(HeadCookie, Acc) ->
+  HeadCookies2 = binary:replace(HeadCookies, <<" ">>, <<"">>, [global]),
+  HeadCookies3 = lists:foldr(fun(HeadCookie, Acc) ->
                               [Key, Value] = binary:split(HeadCookie, <<"=">>),
                               [{Key, Value}|Acc]
                              end, [], binary:split(HeadCookies2, <<";">>, [global])),
