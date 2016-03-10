@@ -32,7 +32,7 @@ new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
 
 -spec reply(wok_req:wok_req()) -> term().
 reply(Req) ->
-  {ok, 
+  {ok,
    wok_req:get_response_code(Req),
    wok_req:get_response_headers(Req),
    wok_req:get_response_body(Req)}.
@@ -47,13 +47,19 @@ reply(Req) ->
                   | {http_only, boolean()}]) -> wok_req:wok_req().
 set_cookie(Req, Name, Value, _Options) ->
   #{cookies := Cookies} = HttpReq = wok_req:get_http_req(Req),
-  wok_req:set_http_req(Req, HttpReq#{cookies => [{bucs:to_binary(Name), 
+  wok_req:set_http_req(Req, HttpReq#{cookies => [{bucs:to_binary(Name),
                                                   bucs:to_binary(Value)}|Cookies]}).
 
 -spec get_cookies(wok_req:wok_req()) -> [{binary(), binary()}].
 get_cookies(Req) ->
-  #{cookies := Cookies} = wok_req:get_http_req(Req),
-  Cookies.
+  #{cookies := ReqCookies, headers := Headers} = wok_req:get_http_req(Req),
+  {_, HeadCookies} = lists:keyfind(<<"cookies">>, 1, Headers),
+  HeadCookies2 = binary:replace(HeadCookies, <<" ">>, [global]),
+  HeadCookies3 = lists:foldl(fun(HeadCookie, Acc) ->
+                              [Key, Value] = binary:split(HeadCookie, <<"=">>),
+                              [{Key, Value}|Acc]
+                             end, [], binary:split(HeadCookies2, <<";">>, [global])),
+  HeadCookies3 ++ ReqCookies.
 
 -spec client_ip(wok_req:wok_req()) -> inet:ip_address().
 client_ip(_Req) ->
@@ -97,8 +103,8 @@ header(Req, Name, Default) ->
 
 -spec headers(wok_req:wok_req()) -> [{binary(), iodata()}].
 headers(Req) ->
-  #{headers := Headres} = wok_req:get_http_req(Req),
-  Headres.
+  #{headers := Headers} = wok_req:get_http_req(Req),
+  Headers.
 
 -spec post_values(wok_req:wok_req()) -> {ok, [{binary(), binary() | true}], wok_req:wok_req()}
                                         | {error, wok_req:wok_req()}.
