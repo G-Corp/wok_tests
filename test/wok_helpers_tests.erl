@@ -62,7 +62,7 @@ assert_test_() ->
     end
    ]}.
 
-assert_message_test_() ->
+assert_produce_test_() ->
   {setup,
    fun() ->
        doteki:set_env_from_config(
@@ -86,7 +86,7 @@ assert_message_test_() ->
    end,
    [
     fun() ->
-        wok_tests:message(test, 
+        wok_tests:produce(test, 
                           <<"from">>, 
                           <<"my_service/my_controler/my_action">>, 
                           [], 

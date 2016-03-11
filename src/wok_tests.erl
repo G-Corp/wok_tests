@@ -2,8 +2,8 @@
 -include_lib("eunit/include/eunit.hrl").
 
 - export([
-          message/4,
-          message/6,
+          produce/4,
+          produce/6,
           build_message/1
          ]).
 
@@ -34,10 +34,10 @@
          debug/2
         ]).
 
-message(Topic, To, Message, Fun) ->
-  message(Topic, <<"test">>, To, [], Message, Fun).
+produce(Topic, To, Message, Fun) ->
+  produce(Topic, <<"test">>, To, [], Message, Fun).
 
-message(_Topic, From, To, Headers, Message, Fun) ->
+produce(_Topic, From, To, Headers, Message, Fun) ->
   case os:getenv("KAFKA_TEST") of
     "true" -> ok;
     _ -> 
