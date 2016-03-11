@@ -37,10 +37,23 @@
 message(Topic, To, Message, Fun) ->
   message(Topic, <<"test">>, To, [], Message, Fun).
 
-message(_Topic, _From, _To, _Headers, _Message, _Fun) ->
+message(_Topic, From, To, Headers, Message, Fun) ->
   case os:getenv("KAFKA_TEST") of
     "true" -> ok;
-    _ -> ok
+    _ -> 
+      Paths = wok_message_path:get_message_path_handlers(
+                doteki:get_env([wok, messages, services],
+                               doteki:get_env([wok, messages, controlers], []))),
+      Services = wok_message_path:get_message_handlers(To, Paths),
+      lists:foreach(fun({Handler, Function}) ->
+                        Fun(erlang:apply(Handler, 
+                                         Function, 
+                                         [wok_msg:new(From, 
+                                                      To, 
+                                                      Headers, 
+                                                      Message, 
+                                                      <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)]))
+                    end, [maps:get(X, Paths) || X <- Services])
   end.
 
 build_message(Map) when is_map(Map) ->

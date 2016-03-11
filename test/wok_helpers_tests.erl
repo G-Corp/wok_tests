@@ -62,3 +62,38 @@ assert_test_() ->
     end
    ]}.
 
+assert_message_test_() ->
+  {setup,
+   fun() ->
+       doteki:set_env_from_config(
+         [{wok, [
+           {messages, [
+             {controlers, [
+               {<<"my_service/my_controler/my_action">>, {dummy_service_handler, my_action}},
+               {<<"my_service/my_controler/my_answer">>, {dummy_service_handler, my_answer}},
+               {<<"*/my_controler/my_reaction">>, {dummy_service_handler, my_reaction}}
+             ]}
+           ]}
+         ]}]),
+       meck:new(dummy_service_handler, [non_strict]),
+       meck:expect(dummy_service_handler, my_action, 
+                   fun(Req) ->
+                       Req
+                   end)
+   end,
+   fun(_) ->
+       meck:unload(dummy_service_handler)
+   end,
+   [
+    fun() ->
+        wok_tests:message(test, 
+                          <<"from">>, 
+                          <<"my_service/my_controler/my_action">>, 
+                          [], 
+                          <<"message">>, 
+                          fun(R) ->
+                              wok_tests:assert(R =/= undefined)
+                          end)
+    end
+   ]}.
+
