@@ -56,12 +56,10 @@ get_cookies(Req) ->
   case lists:keyfind(<<"cookies">>, 1, Headers) of
     false -> ReqCookies;
     {_, HeadCookies} ->
-      HeadCookies2 = binary:replace(HeadCookies, <<" ">>, <<"">>, [global]),
-      HeadCookies3 = lists:foldr(fun(HeadCookie, Acc) ->
+      ReqCookies ++ lists:foldr(fun(HeadCookie, Acc) ->
                                   [Key, Value] = binary:split(HeadCookie, <<"=">>),
-                                  [{Key, Value}|Acc]
-                                 end, [], binary:split(HeadCookies2, <<";">>, [global])),
-      HeadCookies3 ++ ReqCookies
+                                  [{bucbinary:trim(Key, both), bucbinary:trim(Value, both)}|Acc]
+                                end, [], binary:split(HeadCookies, <<";">>, [global]))
     end.
 
 -spec client_ip(wok_req:wok_req()) -> inet:ip_address().
