@@ -53,7 +53,7 @@ set_cookie(Req, Name, Value, _Options) ->
 -spec get_cookies(wok_req:wok_req()) -> [{binary(), binary()}].
 get_cookies(Req) ->
   #{cookies := ReqCookies, headers := Headers} = wok_req:get_http_req(Req),
-  case lists:keyfind(<<"cookies">>, 1, Headers) of
+  case lists:keyfind(<<"Cookie">>, 1, Headers) of
     false -> ReqCookies;
     {_, HeadCookies} ->
       ReqCookies ++ lists:foldr(fun(HeadCookie, Acc) ->
