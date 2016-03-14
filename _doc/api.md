@@ -1,8 +1,22 @@
 # Tests API
 
+## produce/3
+
+## produce/4
+
+## produce/5
+
+## produce/6
+
+## request/2
+
 ## request/3
 
+## request/5
+
 ## request/6
+
+## follow/2
 
 ## follow/3
 
