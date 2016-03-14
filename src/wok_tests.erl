@@ -2,15 +2,20 @@
 -include_lib("eunit/include/eunit.hrl").
 
 - export([
+          produce/3,
           produce/4,
+          produce/5,
           produce/6,
           build_message/1
          ]).
 
 % Helpers
 -export([
+         request/2,
          request/3,
+         request/5,
          request/6,
+         follow/2,
          follow/3
         ]).
 
@@ -34,26 +39,34 @@
          debug/2
         ]).
 
+produce(Topic, To, Message) ->
+  produce(Topic, <<"test">>, To, [], Message).
+
 produce(Topic, To, Message, Fun) ->
   produce(Topic, <<"test">>, To, [], Message, Fun).
 
 produce(_Topic, From, To, Headers, Message, Fun) ->
+  lists:foreach(fun(R) ->
+                    Fun(R)
+                end, produce(_Topic, From, To, Headers, Message)).
+
+produce(_Topic, From, To, Headers, Message) ->
   case os:getenv("KAFKA_TEST") of
-    "true" -> ok;
+    "true" -> [];
     _ -> 
       Paths = wok_message_path:get_message_path_handlers(
                 doteki:get_env([wok, messages, services],
                                doteki:get_env([wok, messages, controlers], []))),
       Services = wok_message_path:get_message_handlers(To, Paths),
-      lists:foreach(fun({Handler, Function}) ->
-                        Fun(erlang:apply(Handler, 
+      lists:foldl(fun({Handler, Function}, Acc) ->
+                        [erlang:apply(Handler, 
                                          Function, 
                                          [wok_msg:new(From, 
                                                       To, 
                                                       Headers, 
                                                       Message, 
-                                                      <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)]))
-                    end, [maps:get(X, Paths) || X <- Services])
+                                                      <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
+                    end, [], [maps:get(X, Paths) || X <- Services])
   end.
 
 build_message(Map) when is_map(Map) ->
@@ -75,8 +88,36 @@ build_message(Map) when is_map(Map) ->
 % {timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}} | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
 % {sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()} | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
 % @end
+request(Method, URL) ->
+  request(Method, URL, [], <<>>, []).
+
 request(Method, URL, Fun) ->
   request(Method, URL, [], <<>>, [], Fun).
+
+request(Method, URL, Headers, Body, Options) when is_atom(Method),
+                                                  is_binary(URL),
+                                                  is_list(Headers),
+                                                  is_binary(Body),
+                                                  is_list(Options) ->
+  case os:getenv("HTTP_TEST") of
+    "true" ->
+      _ = hackney:start(),
+      case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
+        {ok, StatusCode, RespHeaders, ClientRef} ->
+          case hackney:body(ClientRef) of
+            {ok, RespBody} ->
+              {ok, StatusCode, RespHeaders, RespBody};
+            E -> 
+              E
+          end;
+        {ok, StatusCode, RespHeaders} ->
+          {ok, StatusCode, RespHeaders, <<>>};
+        E ->
+          E
+      end;
+    _ ->
+      wok_test_adapter:run(Method, URL, Headers, Body, Options)
+  end.
 
 request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(URL),
@@ -84,27 +125,9 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(Body),
                                                        is_list(Options),
                                                        is_function(Fun) ->
-  case os:getenv("HTTP_TEST") of
-    "true" ->
-      _ = hackney:start(),
-      Fun(case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
-            {ok, StatusCode, RespHeaders, ClientRef} ->
-              case hackney:body(ClientRef) of
-                {ok, RespBody} ->
-                  {ok, StatusCode, RespHeaders, RespBody};
-                E -> 
-                  E
-              end;
-            {ok, StatusCode, RespHeaders} ->
-              {ok, StatusCode, RespHeaders, <<>>};
-            E ->
-              E
-          end);
-    _ ->
-      Fun(wok_test_adapter:run(Method, URL, Headers, Body, Options))
-  end.
+  Fun(request(Method, URL, Headers,Body, Options)).
 
-follow(Method, URL, Fun) ->
+follow(Method, URL) ->
   case http_uri:parse(bucs:to_string(URL)) of
     {ok, {Scheme, UserInfo, Host, Port, _, _}} ->
       Base = bucs:to_binary(
@@ -117,15 +140,17 @@ follow(Method, URL, Fun) ->
                end),
       request(Method, URL, fun({ok, StatusCode, RespHeaders, <<>>}) when StatusCode >= 300, StatusCode < 400 ->
                                case get_header(<<"Location">>, RespHeaders) of
-                                 <<>> -> Fun({error, not_redirect});
-                                 Location -> request(get, <<Base/binary, Location/binary>>, Fun)
+                                 <<>> -> {error, not_redirect};
+                                 Location -> request(get, <<Base/binary, Location/binary>>)
                                end;
                               (X) ->
-                               Fun(X)
+                               X
                            end);
     E ->
-      Fun(E)
+      E
   end.
+follow(Method, URL, Fun) ->
+  Fun(follow(Method, URL)).
 
 assert(Boolean) ->
   ?assert(Boolean).
