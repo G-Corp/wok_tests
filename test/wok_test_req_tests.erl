@@ -16,7 +16,7 @@ teardown(_) ->
   ok.
 
 t_get_cookies() ->
-  WokTestReq = wok_test_req:new('GET', "/", [{<<"cookies">>, <<" abc=a b c; def=def">>}], <<"">>, <<"">>, [], [{<<"ghi">>, <<"ghi">>}]),
+  WokTestReq = wok_test_req:new('GET', "/", [{<<"Cookie">>, <<" abc=a b c; def=def">>}], <<"">>, <<"">>, [], [{<<"ghi">>, <<"ghi">>}]),
   ?assertEqual(
     [{<<"ghi">>, <<"ghi">>}, {<<"abc">>, <<"a b c">>},{<<"def">>, <<"def">>}],
     wok_test_req:get_cookies(WokTestReq)
