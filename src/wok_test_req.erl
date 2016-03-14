@@ -3,7 +3,11 @@
 -behaviour(wok_req).
 
 -export([
-  new/7
+  % wok_test_req-specific functions
+    new/7
+  , get_response_cookies/1
+
+  % wok_req behaviour
   , reply/1
   , set_cookie/4
   , get_cookies/1
@@ -28,7 +32,12 @@ new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
                                                body => bucs:to_binary(Body),
                                                query => bucs:to_binary(Query),
                                                bindings => Bindings,
-                                               cookies => Cookies}).
+                                               cookies => Cookies,
+                                               response_cookies => []}).
+
+get_response_cookies(Req) ->
+  #{response_cookies := Cookies} = wok_req:get_http_req(Req),
+  Cookies.
 
 -spec reply(wok_req:wok_req()) -> term().
 reply(Req) ->
@@ -46,21 +55,15 @@ reply(Req) ->
                   | {secure, boolean()}
                   | {http_only, boolean()}]) -> wok_req:wok_req().
 set_cookie(Req, Name, Value, _Options) ->
-  #{cookies := Cookies} = HttpReq = wok_req:get_http_req(Req),
-  wok_req:set_http_req(Req, HttpReq#{cookies => [{bucs:to_binary(Name),
-                                                  bucs:to_binary(Value)}|Cookies]}).
+  #{response_cookies := Cookies} = WokTestReq = wok_req:get_http_req(Req),
+  wok_req:set_http_req(Req, WokTestReq#{
+    response_cookies => [{bucs:to_binary(Name), bucs:to_binary(Value)} | Cookies]
+  }).
 
 -spec get_cookies(wok_req:wok_req()) -> [{binary(), binary()}].
 get_cookies(Req) ->
-  #{cookies := ReqCookies, headers := Headers} = wok_req:get_http_req(Req),
-  case lists:keyfind(<<"Cookie">>, 1, Headers) of
-    false -> ReqCookies;
-    {_, HeadCookies} ->
-      ReqCookies ++ lists:foldr(fun(HeadCookie, Acc) ->
-                                  [Key, Value] = binary:split(HeadCookie, <<"=">>),
-                                  [{bucbinary:trim(Key, both), bucbinary:trim(Value, both)}|Acc]
-                                end, [], binary:split(HeadCookies, <<";">>, [global]))
-    end.
+  #{cookies := ReqCookies} = wok_req:get_http_req(Req),
+  ReqCookies.
 
 -spec client_ip(wok_req:wok_req()) -> inet:ip_address().
 client_ip(_Req) ->
