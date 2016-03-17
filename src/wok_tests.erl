@@ -1,10 +1,10 @@
 -module(wok_tests).
 -include_lib("eunit/include/eunit.hrl").
 
--export([produce/3
-         , produce/4
-         , produce/5
-         , produce/6
+-export([provide/3
+         , provide/4
+         , provide/5
+         , provide/6
          , build_message/1
         ]).
 
@@ -45,18 +45,18 @@
          debug/2
         ]).
 
-produce(Topic, To, Message) ->
-  produce(Topic, <<"test">>, To, [], Message).
+provide(Topic, To, Message) ->
+  provide(Topic, <<"test">>, To, [], Message).
 
-produce(Topic, To, Message, Fun) ->
-  produce(Topic, <<"test">>, To, [], Message, Fun).
+provide(Topic, To, Message, Fun) ->
+  provide(Topic, <<"test">>, To, [], Message, Fun).
 
-produce(_Topic, From, To, Headers, Message, Fun) ->
+provide(_Topic, From, To, Headers, Message, Fun) ->
   lists:foreach(fun(R) ->
                     Fun(R)
-                end, produce(_Topic, From, To, Headers, Message)).
+                end, provide(_Topic, From, To, Headers, Message)).
 
-produce(_Topic, From, To, Headers, Message) ->
+provide(_Topic, From, To, Headers, Message) ->
   case os:getenv("KAFKA_TEST") of
     "true" -> [];
     _ -> 
