@@ -1,12 +1,12 @@
 # Tests API
 
-## produce/3
+## provide/3
 
-## produce/4
+## provide/4
 
-## produce/5
+## provide/5
 
-## produce/6
+## provide/6
 
 ## request/2
 

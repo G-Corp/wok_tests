@@ -3,17 +3,17 @@
 # Using mix.mk (https://github.com/botsunit/mix.mk)
 # MODIFY IT AT YOUR OWN RISK AND ONLY IF YOU KNOW WHAT YOU ARE DOING!
 defmodule Wok.Tests do
-	def unquote(:"produce")(arg1, arg2, arg3) do
-		:erlang.apply(:"wok_tests", :"produce", [arg1, arg2, arg3])
+	def unquote(:"provide")(arg1, arg2, arg3) do
+		:erlang.apply(:"wok_tests", :"provide", [arg1, arg2, arg3])
 	end
-	def unquote(:"produce")(arg1, arg2, arg3, arg4) do
-		:erlang.apply(:"wok_tests", :"produce", [arg1, arg2, arg3, arg4])
+	def unquote(:"provide")(arg1, arg2, arg3, arg4) do
+		:erlang.apply(:"wok_tests", :"provide", [arg1, arg2, arg3, arg4])
 	end
-	def unquote(:"produce")(arg1, arg2, arg3, arg4, arg5, arg6) do
-		:erlang.apply(:"wok_tests", :"produce", [arg1, arg2, arg3, arg4, arg5, arg6])
+	def unquote(:"provide")(arg1, arg2, arg3, arg4, arg5, arg6) do
+		:erlang.apply(:"wok_tests", :"provide", [arg1, arg2, arg3, arg4, arg5, arg6])
 	end
-	def unquote(:"produce")(arg1, arg2, arg3, arg4, arg5) do
-		:erlang.apply(:"wok_tests", :"produce", [arg1, arg2, arg3, arg4, arg5])
+	def unquote(:"provide")(arg1, arg2, arg3, arg4, arg5) do
+		:erlang.apply(:"wok_tests", :"provide", [arg1, arg2, arg3, arg4, arg5])
 	end
 	def unquote(:"build_message")(arg1) do
 		:erlang.apply(:"wok_tests", :"build_message", [arg1])

@@ -9,7 +9,7 @@
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert-1">assert/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_equal-2">assert_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not-1">assert_not/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not_equal-2">assert_not_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_code-2">assert_request_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_has_body-1">assert_request_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_header-2">assert_request_header/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_code-2">assert_request_not_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_found-1">assert_request_not_found/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_has_body-1">assert_request_not_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_ok-1">assert_request_ok/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_redirect-1">assert_request_redirect/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_response_code-2">assert_response_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_has_body-1">assert_response_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_header-2">assert_response_header/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_code-2">assert_response_not_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_found-1">assert_response_not_found/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_has_body-1">assert_response_not_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_ok-1">assert_response_ok/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_redirect-1">assert_response_redirect/1</a></td><td></td></tr><tr><td valign="top"><a href="#build_message-1">build_message/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-2">follow/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-3">follow/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-3">produce/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-4">produce/4</a></td><td></td></tr><tr><td valign="top"><a href="#produce-5">produce/5</a></td><td></td></tr><tr><td valign="top"><a href="#produce-6">produce/6</a></td><td></td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td> 
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert-1">assert/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_equal-2">assert_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not-1">assert_not/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not_equal-2">assert_not_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_code-2">assert_request_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_has_body-1">assert_request_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_header-2">assert_request_header/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_code-2">assert_request_not_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_found-1">assert_request_not_found/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_has_body-1">assert_request_not_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_ok-1">assert_request_ok/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_redirect-1">assert_request_redirect/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_response_code-2">assert_response_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_has_body-1">assert_response_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_header-2">assert_response_header/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_code-2">assert_response_not_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_found-1">assert_response_not_found/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_has_body-1">assert_response_not_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_ok-1">assert_response_ok/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_redirect-1">assert_response_redirect/1</a></td><td></td></tr><tr><td valign="top"><a href="#build_message-1">build_message/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-2">follow/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-3">follow/3</a></td><td></td></tr><tr><td valign="top"><a href="#provide-3">provide/3</a></td><td></td></tr><tr><td valign="top"><a href="#provide-4">provide/4</a></td><td></td></tr><tr><td valign="top"><a href="#provide-5">provide/5</a></td><td></td></tr><tr><td valign="top"><a href="#provide-6">provide/6</a></td><td></td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td> 
 Send or simulate a HTTP request.</td></tr><tr><td valign="top"><a href="#request-3">request/3</a></td><td></td></tr><tr><td valign="top"><a href="#request-5">request/5</a></td><td></td></tr><tr><td valign="top"><a href="#request-6">request/6</a></td><td></td></tr></table>
 
 
@@ -183,29 +183,29 @@ __This function is deprecated:__ Please use [`wok_tests:assert_response_redirect
 
 `follow(Method, URL, Fun) -> any()`
 
-<a name="produce-3"></a>
+<a name="provide-3"></a>
 
-### produce/3 ###
+### provide/3 ###
 
-`produce(Topic, To, Message) -> any()`
+`provide(Topic, To, Message) -> any()`
 
-<a name="produce-4"></a>
+<a name="provide-4"></a>
 
-### produce/4 ###
+### provide/4 ###
 
-`produce(Topic, To, Message, Fun) -> any()`
+`provide(Topic, To, Message, Fun) -> any()`
 
-<a name="produce-5"></a>
+<a name="provide-5"></a>
 
-### produce/5 ###
+### provide/5 ###
 
-`produce(Topic, From, To, Headers, Message) -> any()`
+`provide(Topic, From, To, Headers, Message) -> any()`
 
-<a name="produce-6"></a>
+<a name="provide-6"></a>
 
-### produce/6 ###
+### provide/6 ###
 
-`produce(Topic, From, To, Headers, Message, Fun) -> any()`
+`provide(Topic, From, To, Headers, Message, Fun) -> any()`
 
 <a name="request-2"></a>
 
