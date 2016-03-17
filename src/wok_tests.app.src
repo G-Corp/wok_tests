@@ -2,6 +2,6 @@
 	{description, "Wok tests module"},
 	{vsn, "0.0.1"},
 	{modules, []},
-	{registered, [wok_tests_sup]},
+	{registered, []},
 	{applications, [kernel,stdlib]}
 ]}.
