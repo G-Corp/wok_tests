@@ -35,7 +35,8 @@ new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalStat
                                                       body => bucs:to_binary(Body),
                                                       query => bucs:to_binary(Query),
                                                       bindings => Bindings,
-                                                      cookies => Cookies}),
+                                                      cookies => Cookies,
+                                                      response_cookies => []}),
   Req1 = wok_req:set_global_state(Req0, GlobalState),
   Req2 = wok_req:set_local_state(Req1, LocalState),
   wok_req:set_custom_data(Req2, CustomData).
