@@ -5,6 +5,7 @@
 -export([
   % wok_test_req-specific functions
     new/7
+  , new/10
   , get_response_cookies/1
 
   % wok_req behaviour
@@ -26,14 +27,18 @@
 ]).
 
 new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
-  wok_req:set_http_req(wok_req:new(?MODULE), #{url => bucs:to_string(URL),
-                                               method => Method,
-                                               headers => Headers,
-                                               body => bucs:to_binary(Body),
-                                               query => bucs:to_binary(Query),
-                                               bindings => Bindings,
-                                               cookies => Cookies,
-                                               response_cookies => []}).
+  new(Method, URL, Headers, Body, Query, Bindings, Cookies, undefined, undefined, #{}).
+new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalState, CustomData) ->
+  Req0 = wok_req:set_http_req(wok_req:new(?MODULE), #{url => bucs:to_string(URL),
+                                                      method => Method,
+                                                      headers => Headers,
+                                                      body => bucs:to_binary(Body),
+                                                      query => bucs:to_binary(Query),
+                                                      bindings => Bindings,
+                                                      cookies => Cookies}),
+  Req1 = wok_req:set_global_state(Req0, GlobalState),
+  Req2 = wok_req:set_local_state(Req1, LocalState),
+  wok_req:set_custom_data(Req2, CustomData).
 
 get_response_cookies(Req) ->
   #{response_cookies := Cookies} = wok_req:get_http_req(Req),

@@ -1,37 +1,43 @@
 -module(wok_tests).
 -include_lib("eunit/include/eunit.hrl").
 
-- export([
-          produce/3,
-          produce/4,
-          produce/5,
-          produce/6,
-          build_message/1
-         ]).
+-export([produce/3
+         , produce/4
+         , produce/5
+         , produce/6
+         , build_message/1
+        ]).
 
 % Helpers
--export([
-         request/2,
-         request/3,
-         request/5,
-         request/6,
-         follow/2,
-         follow/3
+-export([request/2
+         , request/3
+         , request/5
+         , request/6
+         , follow/2
+         , follow/3
         ]).
 
 % Assert
--export([assert/1, 
-         assert_not/1,
-         assert_equal/2,
-         assert_not_equal/2,
-         assert_request_ok/1,
-         assert_request_code/2,
-         assert_request_not_code/2,
-         assert_request_has_body/1,
-         assert_request_not_has_body/1,
-         assert_request_redirect/1,
-         assert_request_not_found/1,
-         assert_request_header/2
+-export([assert/1 
+         , assert_not/1
+         , assert_equal/2
+         , assert_not_equal/2
+         , assert_request_ok/1
+         , assert_request_code/2
+         , assert_request_not_code/2
+         , assert_request_has_body/1
+         , assert_request_not_has_body/1
+         , assert_request_redirect/1
+         , assert_request_not_found/1
+         , assert_request_header/2
+         , assert_response_ok/1
+         , assert_response_code/2
+         , assert_response_not_code/2
+         , assert_response_has_body/1
+         , assert_response_not_has_body/1
+         , assert_response_redirect/1
+         , assert_response_not_found/1
+         , assert_response_header/2
         ]).
 
 -export([
@@ -59,14 +65,14 @@ produce(_Topic, From, To, Headers, Message) ->
                                doteki:get_env([wok, messages, controlers], []))),
       Services = wok_message_path:get_message_handlers(To, Paths),
       lists:foldl(fun({Handler, Function}, Acc) ->
-                        [erlang:apply(Handler, 
-                                         Function, 
-                                         [wok_msg:new(From, 
-                                                      To, 
-                                                      Headers, 
-                                                      Message, 
-                                                      <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
-                    end, [], [maps:get(X, Paths) || X <- Services])
+                      [erlang:apply(Handler, 
+                                    Function, 
+                                    [wok_msg:new(From, 
+                                                 To, 
+                                                 Headers, 
+                                                 Message, 
+                                                 <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
+                  end, [], [maps:get(X, Paths) || X <- Services])
   end.
 
 build_message(Map) when is_map(Map) ->
@@ -76,7 +82,7 @@ build_message(Map) when is_map(Map) ->
     maps:get(headers, Map, []),
     maps:get(body, Map, <<>>),
     maps:get(uuid, Map, <<"5a9bea37-c811-4f09-afa0-87a33b37dff3">>)).
-  
+
 % @doc
 % Send or simulate a HTTP request
 %
@@ -102,7 +108,10 @@ request(Method, URL, Headers, Body, Options) when is_atom(Method),
   case os:getenv("HTTP_TEST") of
     "true" ->
       _ = hackney:start(),
-      case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options) of
+      Options0 = lists:keydelete(local_state, 1, Options),
+      Options1 = lists:keydelete(global_state, 1, Options0),
+      Options2 = lists:keydelete(custom_data, 1, Options1),
+      case hackney:request(Method, bucs:to_binary(URL), Headers, bucs:to_binary(Body), Options2) of
         {ok, StatusCode, RespHeaders, ClientRef} ->
           case hackney:body(ClientRef) of
             {ok, RespBody} ->
@@ -164,46 +173,77 @@ assert_equal(Expected, Expression) ->
 assert_not_equal(Expected, Expression) ->
   ?assertNotEqual(Expected, Expression).
 
-assert_request_ok({ok, Code, _, _}) ->
+% @deprecated Please use {@link wok_tests:assert_response_ok/1}
+assert_request_ok(R) ->
+  assert_response_ok(R).
+
+% @deprecated Please use {@link wok_tests:assert_response_code/2}
+assert_request_code(E, R) ->
+  assert_response_code(E, R).
+
+% @deprecated Please use {@link wok_tests:assert_response_not_code/2}
+assert_request_not_code(E, R) ->
+  assert_response_not_code(E, R).
+
+% @deprecated Please use {@link wok_tests:assert_response_has_body/1}
+assert_request_has_body(R) ->
+  assert_response_has_body(R).
+
+% @deprecated Please use {@link wok_tests:assert_response_not_has_body/1}
+assert_request_not_has_body(R) ->
+  assert_response_not_has_body(R).
+
+% @deprecated Please use {@link wok_tests:assert_response_redirect/1}
+assert_request_redirect(R) ->
+  assert_response_redirect(R).
+
+% @deprecated Please use {@link wok_tests:assert_response_not_found/1}
+assert_request_not_found(R) ->
+  assert_response_not_found(R).
+
+% @deprecated Please use {@link wok_tests:assert_response_header/2}
+assert_request_header(H, R) ->
+  assert_response_header(H, R).
+
+assert_response_ok({ok, Code, _, _}) ->
   ?assert(Code >= 200 andalso Code < 300);
-assert_request_ok(_) ->
+assert_response_ok(_) ->
   ?assert(false).
 
-assert_request_code(ExpectedCode, {ok, Code, _, _}) ->
+assert_response_code(ExpectedCode, {ok, Code, _, _}) ->
   ?assertEqual(ExpectedCode, Code);
-assert_request_code(_, _) ->
+assert_response_code(_, _) ->
   ?assert(false).
 
-assert_request_not_code(ExpectedCode, {ok, Code, _, _}) ->
+assert_response_not_code(ExpectedCode, {ok, Code, _, _}) ->
   ?assertNotEqual(ExpectedCode, Code);
-assert_request_not_code(_, _) ->
+assert_response_not_code(_, _) ->
   ?assert(false).
 
-assert_request_has_body({ok, _, _, Body}) ->
+assert_response_has_body({ok, _, _, Body}) ->
   ?assert(<<>> =/= Body);
-assert_request_has_body(_) ->
+assert_response_has_body(_) ->
   ?assert(false).
 
-assert_request_not_has_body({ok, _, _, Body}) ->
+assert_response_not_has_body({ok, _, _, Body}) ->
   ?assert(<<>> =:= Body);
-assert_request_not_has_body(_) ->
+assert_response_not_has_body(_) ->
   ?assert(false).
 
-assert_request_redirect({ok, Code, _, _}) ->
+assert_response_redirect({ok, Code, _, _}) ->
   ?assert(Code >= 300 andalso Code < 400);
-assert_request_redirect(_) ->
+assert_response_redirect(_) ->
   ?assert(false).
 
-assert_request_not_found({ok, 404, _, _}) ->
+assert_response_not_found({ok, 404, _, _}) ->
   ?assert(true);
-assert_request_not_found(_) ->
+assert_response_not_found(_) ->
   ?assert(false).
 
-assert_request_header({Header, Value}, {ok, _, Headers, _}) ->
+assert_response_header({Header, Value}, {ok, _, Headers, _}) ->
   ?assertEqual(bucs:to_binary(Value), get_header(Header, Headers));
-assert_request_header(_, _) ->
+assert_response_header(_, _) ->
   ?assert(false).
-
 
 debug(Fmt, Data) ->
   ?debugFmt(Fmt, Data).

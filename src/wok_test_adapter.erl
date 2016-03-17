@@ -4,13 +4,18 @@
 
 -export([run/5]).
 
-run(Method, URL, Headers, Body, _Options) ->
+run(Method, URL, Headers, Body, Options) ->
+  LocalState = buclists:keyfind(local_state, 1, Options, undefined),
+  GlobalState = buclists:keyfind(global_state, 1, Options, undefined),
+  CustomData = buclists:keyfind(custom_data, 1, Options, #{}),
+  Cookies = buclists:keyfind(cookie, 1, Options, []),
   case find_controler(
          bucs:to_atom(string:to_upper(bucs:to_string(Method))),
          URL) of
     {{Handler, Function}, URL1, Bindings, Query} -> 
       Req = wok_test_req:new(bucs:to_binary(string:to_upper(bucs:to_string(Method))), 
-                             URL1, Headers, Body, Query, Bindings, []),
+                             URL1, Headers, Body, Query, Bindings, Cookies,
+                             LocalState, GlobalState, CustomData),
       Req1 = erlang:apply(Handler, Function, [Req]),
       wok_req:reply(Req1);
     not_found ->

@@ -9,7 +9,7 @@
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert-1">assert/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_equal-2">assert_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not-1">assert_not/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not_equal-2">assert_not_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_code-2">assert_request_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_has_body-1">assert_request_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_header-2">assert_request_header/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_code-2">assert_request_not_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_found-1">assert_request_not_found/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_not_has_body-1">assert_request_not_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_ok-1">assert_request_ok/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_redirect-1">assert_request_redirect/1</a></td><td></td></tr><tr><td valign="top"><a href="#build_message-1">build_message/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-2">follow/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-3">follow/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-3">produce/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-4">produce/4</a></td><td></td></tr><tr><td valign="top"><a href="#produce-5">produce/5</a></td><td></td></tr><tr><td valign="top"><a href="#produce-6">produce/6</a></td><td></td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td> 
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#assert-1">assert/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_equal-2">assert_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not-1">assert_not/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_not_equal-2">assert_not_equal/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_request_code-2">assert_request_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_has_body-1">assert_request_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_header-2">assert_request_header/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_code-2">assert_request_not_code/2</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_found-1">assert_request_not_found/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_not_has_body-1">assert_request_not_has_body/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_ok-1">assert_request_ok/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_request_redirect-1">assert_request_redirect/1</a></td><td>(<em>Deprecated</em>.) </td></tr><tr><td valign="top"><a href="#assert_response_code-2">assert_response_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_has_body-1">assert_response_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_header-2">assert_response_header/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_code-2">assert_response_not_code/2</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_found-1">assert_response_not_found/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_not_has_body-1">assert_response_not_has_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_ok-1">assert_response_ok/1</a></td><td></td></tr><tr><td valign="top"><a href="#assert_response_redirect-1">assert_response_redirect/1</a></td><td></td></tr><tr><td valign="top"><a href="#build_message-1">build_message/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-1">debug/1</a></td><td></td></tr><tr><td valign="top"><a href="#debug-2">debug/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-2">follow/2</a></td><td></td></tr><tr><td valign="top"><a href="#follow-3">follow/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-3">produce/3</a></td><td></td></tr><tr><td valign="top"><a href="#produce-4">produce/4</a></td><td></td></tr><tr><td valign="top"><a href="#produce-5">produce/5</a></td><td></td></tr><tr><td valign="top"><a href="#produce-6">produce/6</a></td><td></td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td> 
 Send or simulate a HTTP request.</td></tr><tr><td valign="top"><a href="#request-3">request/3</a></td><td></td></tr><tr><td valign="top"><a href="#request-5">request/5</a></td><td></td></tr><tr><td valign="top"><a href="#request-6">request/6</a></td><td></td></tr></table>
 
 
@@ -45,49 +45,113 @@ Send or simulate a HTTP request.</td></tr><tr><td valign="top"><a href="#request
 
 ### assert_request_code/2 ###
 
-`assert_request_code(ExpectedCode, X2) -> any()`
+`assert_request_code(E, R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_code/2`](wok_tests.md#assert_response_code-2)
 
 <a name="assert_request_has_body-1"></a>
 
 ### assert_request_has_body/1 ###
 
-`assert_request_has_body(X1) -> any()`
+`assert_request_has_body(R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_has_body/1`](wok_tests.md#assert_response_has_body-1)
 
 <a name="assert_request_header-2"></a>
 
 ### assert_request_header/2 ###
 
-`assert_request_header(X1, X2) -> any()`
+`assert_request_header(H, R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_header/2`](wok_tests.md#assert_response_header-2)
 
 <a name="assert_request_not_code-2"></a>
 
 ### assert_request_not_code/2 ###
 
-`assert_request_not_code(ExpectedCode, X2) -> any()`
+`assert_request_not_code(E, R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_not_code/2`](wok_tests.md#assert_response_not_code-2)
 
 <a name="assert_request_not_found-1"></a>
 
 ### assert_request_not_found/1 ###
 
-`assert_request_not_found(X1) -> any()`
+`assert_request_not_found(R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_not_found/1`](wok_tests.md#assert_response_not_found-1)
 
 <a name="assert_request_not_has_body-1"></a>
 
 ### assert_request_not_has_body/1 ###
 
-`assert_request_not_has_body(X1) -> any()`
+`assert_request_not_has_body(R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_not_has_body/1`](wok_tests.md#assert_response_not_has_body-1)
 
 <a name="assert_request_ok-1"></a>
 
 ### assert_request_ok/1 ###
 
-`assert_request_ok(X1) -> any()`
+`assert_request_ok(R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_ok/1`](wok_tests.md#assert_response_ok-1)
 
 <a name="assert_request_redirect-1"></a>
 
 ### assert_request_redirect/1 ###
 
-`assert_request_redirect(X1) -> any()`
+`assert_request_redirect(R) -> any()`
+
+__This function is deprecated:__ Please use [`wok_tests:assert_response_redirect/1`](wok_tests.md#assert_response_redirect-1)
+
+<a name="assert_response_code-2"></a>
+
+### assert_response_code/2 ###
+
+`assert_response_code(ExpectedCode, X2) -> any()`
+
+<a name="assert_response_has_body-1"></a>
+
+### assert_response_has_body/1 ###
+
+`assert_response_has_body(X1) -> any()`
+
+<a name="assert_response_header-2"></a>
+
+### assert_response_header/2 ###
+
+`assert_response_header(X1, X2) -> any()`
+
+<a name="assert_response_not_code-2"></a>
+
+### assert_response_not_code/2 ###
+
+`assert_response_not_code(ExpectedCode, X2) -> any()`
+
+<a name="assert_response_not_found-1"></a>
+
+### assert_response_not_found/1 ###
+
+`assert_response_not_found(X1) -> any()`
+
+<a name="assert_response_not_has_body-1"></a>
+
+### assert_response_not_has_body/1 ###
+
+`assert_response_not_has_body(X1) -> any()`
+
+<a name="assert_response_ok-1"></a>
+
+### assert_response_ok/1 ###
+
+`assert_response_ok(X1) -> any()`
+
+<a name="assert_response_redirect-1"></a>
+
+### assert_response_redirect/1 ###
+
+`assert_response_redirect(X1) -> any()`
 
 <a name="build_message-1"></a>
 
