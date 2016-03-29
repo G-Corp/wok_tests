@@ -5,7 +5,7 @@
 wok_test_req_test_() ->
    [
      new_sets_request_properties(),
-     set_cookie_sets_response_cookie()
+     set_cookie_sets_response_cookie_and_sorts_options()
    ].
 
 new_sets_request_properties() ->
@@ -30,7 +30,8 @@ new_sets_request_properties() ->
     , ?_assertEqual([{<<"mycookie">>, <<"myvalue">>}], wok_req:get_cookies(Req))
   ].
 
-set_cookie_sets_response_cookie() ->
+set_cookie_sets_response_cookie_and_sorts_options() ->
   Req = wok_test_req:new('GET', "/", [], <<"">>, <<"">>, [], []),
-  Req2 = wok_req:set_cookie(Req, <<"mycookie">>, <<"myvalue">>, []),
-  ?_assertEqual([{<<"mycookie">>, <<"myvalue">>}], wok_test_req:get_response_cookies(Req2)).
+  Req2 = wok_req:set_cookie(Req, <<"mycookie">>, <<"myvalue">>, [{path, <<"/">>}, {max_age, 1234}]),
+  ?_assertEqual([{<<"mycookie">>, <<"myvalue">>, [{max_age, 1234}, {path, <<"/">>}]}],
+    wok_test_req:get_response_cookies(Req2)).

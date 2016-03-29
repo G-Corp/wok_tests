@@ -26,6 +26,13 @@
   , binding_values/1
 ]).
 
+-type cookie_option() ::
+         {max_age, non_neg_integer()}
+       | {domain, binary()}
+       | {path, binary()}
+       | {secure, boolean()}
+       | {http_only, boolean()}.
+
 new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
   new(Method, URL, Headers, Body, Query, Bindings, Cookies, undefined, undefined, #{}).
 new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalState, CustomData) ->
@@ -41,6 +48,11 @@ new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalStat
   Req2 = wok_req:set_local_state(Req1, LocalState),
   wok_req:set_custom_data(Req2, CustomData).
 
+-spec get_response_cookies(wok_req:wok_req()) -> [
+    { iodata(),
+      iodata(),
+      [cookie_option()]}
+  ].
 get_response_cookies(Req) ->
   #{response_cookies := Cookies} = wok_req:get_http_req(Req),
   Cookies.
@@ -55,15 +67,11 @@ reply(Req) ->
 -spec set_cookie(wok_req:wok_req(),
                  iodata(),
                  iodata(),
-                 [{max_age, non_neg_integer()}
-                  | {domain, binary()}
-                  | {path, binary()}
-                  | {secure, boolean()}
-                  | {http_only, boolean()}]) -> wok_req:wok_req().
-set_cookie(Req, Name, Value, _Options) ->
+                 [cookie_option()]) -> wok_req:wok_req().
+set_cookie(Req, Name, Value, Options) ->
   #{response_cookies := Cookies} = WokTestReq = wok_req:get_http_req(Req),
   wok_req:set_http_req(Req, WokTestReq#{
-    response_cookies => [{bucs:to_binary(Name), bucs:to_binary(Value)} | Cookies]
+    response_cookies => [{bucs:to_binary(Name), bucs:to_binary(Value), lists:keysort(1, Options)} | Cookies]
   }).
 
 -spec get_cookies(wok_req:wok_req()) -> [{binary(), binary()}].
