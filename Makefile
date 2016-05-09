@@ -10,7 +10,7 @@ dep_hexpm.mk = git https://github.com/botsunit/hexpm.mk.git master
 
 DEPS = bucs wok_http_adapter wok_message_handler doteki hackney
 dep_bucs = git https://github.com/botsunit/bucs.git master
-dep_wok_http_adapter = git git@gitlab.botsunit.com:msaas/wok_http_adapter.git master
+dep_wok_http_adapter = git git@gitlab.botsunit.com:msaas/wok_http_adapter.git rewrite-http-params
 dep_wok_message_handler = git git@gitlab.botsunit.com:msaas/wok_message_handler.git master
 dep_doteki = git https://github.com/botsunit/doteki.git master
 dep_hackney = hex >= 0.12.0

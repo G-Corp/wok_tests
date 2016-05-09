@@ -11,7 +11,8 @@ wok_test_req_test_() ->
 new_sets_request_properties() ->
   Req = wok_test_req:new('POST',
                          "http://example.com/some/path",
-                         [{<<"header">>, <<"headervalue">>}],
+                         [{<<"header">>, <<"headervalue">>},
+                          {<<"content-type">>, <<"application/x-www-form-urlencoded">>}],
                          <<"body=bodyval">>,
                          <<"query=queryval">>,
                          [{<<"binding">>, <<"boundvalue">>}],
@@ -23,10 +24,10 @@ new_sets_request_properties() ->
     , ?_assertMatch({ok, <<"body=bodyval">>, _}, wok_req:body(Req))
     , ?_assertEqual(<<"/some/path">>, wok_req:path(Req))
     , ?_assertEqual(<<"headervalue">>, wok_req:header(Req, <<"header">>, undefined))
-    , ?_assertEqual([{<<"header">>, <<"headervalue">>}], wok_req:headers(Req))
-    , ?_assertMatch({ok, [{<<"body">>, <<"bodyval">>}], _}, wok_req:post_values(Req))
-    , ?_assertMatch({ok, [{<<"query">>, <<"queryval">>}], _}, wok_req:get_values(Req))
-    , ?_assertMatch({ok, [{<<"binding">>, <<"boundvalue">>}], _}, wok_req:binding_values(Req))
+    , ?_assertEqual([{<<"header">>, <<"headervalue">>}, {<<"content-type">>, <<"application/x-www-form-urlencoded">>}], wok_req:headers(Req))
+    , ?_assertMatch([{<<"body">>, <<"bodyval">>}], wok_req:get_post_values(Req))
+    , ?_assertMatch([{<<"query">>, <<"queryval">>}], wok_req:get_get_values(Req))
+    , ?_assertMatch([{<<"binding">>, <<"boundvalue">>}], wok_req:get_bind_values(Req))
     , ?_assertEqual([{<<"mycookie">>, <<"myvalue">>}], wok_req:get_cookies(Req))
   ].
 

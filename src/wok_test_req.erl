@@ -2,14 +2,15 @@
 -module(wok_test_req).
 -behaviour(wok_req).
 
+% wok_test_req-specific functions
 -export([
-  % wok_test_req-specific functions
     new/7
   , new/10
-  , get_response_cookies/1
+  , get_response_cookies/1]).
 
-  % wok_req behaviour
-  , reply/1
+% wok_req behaviour
+-export([
+  reply/1
   , set_cookie/4
   , get_cookies/1
   , client_ip/1
@@ -36,14 +37,14 @@
 new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
   new(Method, URL, Headers, Body, Query, Bindings, Cookies, undefined, undefined, #{}).
 new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalState, CustomData) ->
-  Req0 = wok_req:set_http_req(wok_req:new(?MODULE), #{url => bucs:to_string(URL),
-                                                      method => Method,
-                                                      headers => Headers,
-                                                      body => bucs:to_binary(Body),
-                                                      query => bucs:to_binary(Query),
-                                                      bindings => Bindings,
-                                                      cookies => Cookies,
-                                                      response_cookies => []}),
+  Req0 = wok_req:new(?MODULE, #{url => bucs:to_string(URL),
+                                method => Method,
+                                headers => Headers,
+                                body => bucs:to_binary(Body),
+                                query => bucs:to_binary(Query),
+                                bindings => Bindings,
+                                cookies => Cookies,
+                                response_cookies => []}),
   Req1 = wok_req:set_global_state(Req0, GlobalState),
   Req2 = wok_req:set_local_state(Req1, LocalState),
   wok_req:set_custom_data(Req2, CustomData).
@@ -124,22 +125,19 @@ headers(Req) ->
   #{headers := Headers} = wok_req:get_http_req(Req),
   Headers.
 
--spec post_values(wok_req:wok_req()) -> {ok, [{binary(), binary() | true}], wok_req:wok_req()}
-                                        | {error, wok_req:wok_req()}.
-post_values(Req) ->
-  #{body := Body} = wok_req:get_http_req(Req),
-  {ok, parse_qs(Body), Req}.
+-spec post_values(term()) -> {ok, [{binary(), binary() | true}], term()}
+                             | {error, term()}.
+post_values(#{body := Body} = Req) ->
+  {ok, parse_qs(Body), [], undefined, Req}.
 
--spec get_values(wok_req:wok_req()) -> {ok, [{binary(), binary() | true}], wok_req:wok_req()}
-                                       | {error, wok_req:wok_req()}.
-get_values(Req) ->
-  #{query := Query} = wok_req:get_http_req(Req),
+-spec get_values(term()) -> {ok, [{binary(), binary() | true}], term()}
+                            | {error, term()}.
+get_values(#{query := Query} = Req) ->
   {ok, parse_qs(Query), Req}.
 
--spec binding_values(wok_req:wok_req()) -> {ok, [{binary(), binary() | true}], wok_req:wok_req()}
-                                           | {error, wok_req:wok_req()}.
-binding_values(Req) ->
-  #{bindings := Bindings} = wok_req:get_http_req(Req),
+-spec binding_values(term()) -> {ok, [{binary(), binary() | true}], term()}
+                                | {error, term()}.
+binding_values(#{bindings := Bindings} = Req) ->
   {ok, Bindings, Req}.
 
 % private
