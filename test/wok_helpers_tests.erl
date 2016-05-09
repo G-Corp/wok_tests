@@ -54,7 +54,7 @@ assert_test_() ->
         os:putenv("HTTP_TEST", "false"),
         wok_tests:request(post, <<"/chat/123/private/456?name=John&mail=john.doe@example.com">>, [], <<>>, [], 
                           fun(Resp) ->
-                              ?assertMatch({ok, _, _, <<"id=123,idroom=456">>}, Resp)
+                              wok_tests:assert_response_body(<<"id=123,idroom=456">>, Resp)
                           end)
     end,
     fun() ->

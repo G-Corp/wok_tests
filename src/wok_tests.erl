@@ -35,6 +35,7 @@
          , assert_response_not_code/2
          , assert_response_has_body/1
          , assert_response_not_has_body/1
+         , assert_response_body/2
          , assert_response_redirect/1
          , assert_response_not_found/1
          , assert_response_header/2
@@ -228,6 +229,11 @@ assert_response_has_body(_) ->
 assert_response_not_has_body({ok, _, _, Body}) ->
   ?assert(<<>> =:= Body);
 assert_response_not_has_body(_) ->
+  ?assert(false).
+
+assert_response_body(ExpectedBody, {ok, _, _, Body}) ->
+  ?assertEqual(ExpectedBody, Body);
+assert_response_body(_, _) ->
   ?assert(false).
 
 assert_response_redirect({ok, Code, _, _}) ->
