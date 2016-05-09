@@ -49,7 +49,7 @@ find_controler(Method, URL) ->
                         length(RouteTokens) == length(Path1) ->
                           Bindings = lists:flatmap(fun
                                                      ({X,X}) -> []; 
-                                                     ({":" ++ X, Y}) -> [{bucs:to_atom(X), Y}];
+                                                     ({":" ++ X, Y}) -> [{bucs:to_atom(X), bucs:to_binary(Y)}];
                                                      ({_, _}) -> [notmatch]
                                                    end, lists:zip(RouteTokens, Path1)),
                           case lists:member(notmatch, Bindings) of
