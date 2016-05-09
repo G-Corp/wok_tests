@@ -4,8 +4,8 @@
 
 wok_test_req_test_() ->
    [
-     new_sets_request_properties(),
-     set_cookie_sets_response_cookie_and_sorts_options()
+     new_sets_request_properties()
+     , set_cookie_sets_response_cookie_and_sorts_options()
    ].
 
 new_sets_request_properties() ->
@@ -16,7 +16,9 @@ new_sets_request_properties() ->
                          <<"body=bodyval">>,
                          <<"query=queryval">>,
                          [{<<"binding">>, <<"boundvalue">>}],
-                         [{<<"mycookie">>, <<"myvalue">>}]),
+                         [{<<"mycookie">>, <<"myvalue">>}],
+                         [{<<"file1">>, <<"text/plain">>, <<"/tmp/xyz/file1.txt">>},
+                          {<<"file2">>, <<"text/html">>, <<"/tmp/zyx/file2.html">>}]),
   [
       ?_assertEqual('POST', wok_req:method(Req))
     , ?_assertEqual(true, wok_req:has_body(Req))
@@ -29,6 +31,9 @@ new_sets_request_properties() ->
     , ?_assertMatch([{<<"query">>, <<"queryval">>}], wok_req:get_get_values(Req))
     , ?_assertMatch([{<<"binding">>, <<"boundvalue">>}], wok_req:get_bind_values(Req))
     , ?_assertEqual([{<<"mycookie">>, <<"myvalue">>}], wok_req:get_cookies(Req))
+    , ?_assertEqual([{<<"file1">>, <<"text/plain">>, <<"/tmp/xyz/file1.txt">>},
+                     {<<"file2">>, <<"text/html">>, <<"/tmp/zyx/file2.html">>}],
+                    wok_req:get_files(Req))
   ].
 
 set_cookie_sets_response_cookie_and_sorts_options() ->
@@ -36,3 +41,4 @@ set_cookie_sets_response_cookie_and_sorts_options() ->
   Req2 = wok_req:set_cookie(Req, <<"mycookie">>, <<"myvalue">>, [{path, <<"/">>}, {max_age, 1234}]),
   ?_assertEqual([{<<"mycookie">>, <<"myvalue">>, [{max_age, 1234}, {path, <<"/">>}]}],
     wok_test_req:get_response_cookies(Req2)).
+

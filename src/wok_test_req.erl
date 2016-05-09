@@ -5,7 +5,9 @@
 % wok_test_req-specific functions
 -export([
     new/7
+  , new/8
   , new/10
+  , new/11
   , get_response_cookies/1]).
 
 % wok_req behaviour
@@ -37,6 +39,10 @@
 new(Method, URL, Headers, Body, Query, Bindings, Cookies) ->
   new(Method, URL, Headers, Body, Query, Bindings, Cookies, undefined, undefined, #{}).
 new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalState, CustomData) ->
+  new(Method, URL, Headers, Body, Query, Bindings, Cookies, [], LocalState, GlobalState, CustomData).
+new(Method, URL, Headers, Body, Query, Bindings, Cookies, Files) ->
+  new(Method, URL, Headers, Body, Query, Bindings, Cookies, Files, undefined, undefined, #{}).
+new(Method, URL, Headers, Body, Query, Bindings, Cookies, Files, LocalState, GlobalState, CustomData) ->
   Req0 = wok_req:new(?MODULE, #{url => bucs:to_string(URL),
                                 method => Method,
                                 headers => Headers,
@@ -44,6 +50,7 @@ new(Method, URL, Headers, Body, Query, Bindings, Cookies, LocalState, GlobalStat
                                 query => bucs:to_binary(Query),
                                 bindings => Bindings,
                                 cookies => Cookies,
+                                files => Files,
                                 response_cookies => []}),
   Req1 = wok_req:set_global_state(Req0, GlobalState),
   Req2 = wok_req:set_local_state(Req1, LocalState),
@@ -127,8 +134,8 @@ headers(Req) ->
 
 -spec post_values(term()) -> {ok, [{binary(), binary() | true}], term()}
                              | {error, term()}.
-post_values(#{body := Body} = Req) ->
-  {ok, parse_qs(Body), [], undefined, Req}.
+post_values(#{body := Body, files := Files} = Req) ->
+  {ok, parse_qs(Body), Files, <<"/tmp">>, Req}.
 
 -spec get_values(term()) -> {ok, [{binary(), binary() | true}], term()}
                             | {error, term()}.
