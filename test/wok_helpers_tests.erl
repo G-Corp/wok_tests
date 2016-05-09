@@ -36,9 +36,13 @@ assert_test_() ->
                      }
                    end),
        meck:new(fake_rest_handler, [non_strict]),
-       meck:expect(fake_rest_handler, chat, 
+       meck:expect(fake_rest_handler, chat,
                    fun(Req) ->
-                       Req
+                       {ok, Bindings, Req1} = wok_req:binding_values(Req),
+                       {id, Id} = lists:keyfind(id, 1, Bindings),
+                       {idroom, IdRoom} = lists:keyfind(idroom, 1, Bindings),
+                       Body = <<"id=", Id/binary, ",", "idroom=", IdRoom/binary>>,
+                       wok_req:set_response_body(Req1, Body)
                    end)
    end,
    fun(_) -> 
@@ -50,7 +54,7 @@ assert_test_() ->
         os:putenv("HTTP_TEST", "false"),
         wok_tests:request(post, <<"/chat/123/private/456?name=John&mail=john.doe@example.com">>, [], <<>>, [], 
                           fun(Resp) ->
-                              wok_tests:assert_request_ok(Resp)
+                              wok_tests:assert_response_body(<<"id=123,idroom=456">>, Resp)
                           end)
     end,
     fun() ->

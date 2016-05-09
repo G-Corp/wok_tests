@@ -22,11 +22,17 @@ assert_http_test_() ->
    [
     fun() ->
         os:putenv("HTTP_TEST", "true"),
-        wok_tests:request(get, <<"http://www.google.fr">>, 
+        wok_tests:request(get, <<"http://httpbin.org/get">>,
                           fun(Resp) ->
-                              wok_tests:assert_request_ok(Resp),
-                              wok_tests:assert_request_has_body(Resp),
-                              wok_tests:assert_request_header({<<"Transfer-Encoding">>, <<"chunked">>}, Resp)
+                              wok_tests:assert_response_ok(Resp),
+                              wok_tests:assert_response_header({<<"Content-Type">>, <<"application/json">>}, Resp),
+                              wok_tests:assert_response_has_body(Resp)
+                          end),
+        wok_tests:request(get, <<"http://httpbin.org/status/200">>,
+                          fun(Resp) ->
+                              wok_tests:assert_response_ok(Resp),
+                              wok_tests:assert_response_not_has_body(Resp),
+                              wok_tests:assert_response_body(<<"">>, Resp)
                           end)
     end
    ]}.
