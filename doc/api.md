@@ -150,6 +150,8 @@ Wok.Tests.request(method :: :get | :post | :put | :delete | :patch,
 
 ## assert_response_not_has_body/1
 
+## assert_response_body/2
+
 ## assert_response_redirect/1
 
 ## assert_response_not_found/1
