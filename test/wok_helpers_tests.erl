@@ -38,11 +38,11 @@ assert_test_() ->
        meck:new(fake_rest_handler, [non_strict]),
        meck:expect(fake_rest_handler, chat,
                    fun(Req) ->
-                       {ok, Bindings, Req1} = wok_req:binding_values(Req),
+                       Bindings = wok_req:get_bind_values(Req),
                        {id, Id} = lists:keyfind(id, 1, Bindings),
                        {idroom, IdRoom} = lists:keyfind(idroom, 1, Bindings),
                        Body = <<"id=", Id/binary, ",", "idroom=", IdRoom/binary>>,
-                       wok_req:set_response_body(Req1, Body)
+                       wok_req:set_response_body(Req, Body)
                    end)
    end,
    fun(_) -> 
