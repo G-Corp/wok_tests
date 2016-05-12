@@ -87,6 +87,9 @@ defmodule Wok.Tests do
 	def unquote(:"assert_response_not_has_body")(arg1) do
 		:erlang.apply(:"wok_tests", :"assert_response_not_has_body", [arg1])
 	end
+	def unquote(:"assert_response_body")(arg1, arg2) do
+		:erlang.apply(:"wok_tests", :"assert_response_body", [arg1, arg2])
+	end
 	def unquote(:"assert_response_redirect")(arg1) do
 		:erlang.apply(:"wok_tests", :"assert_response_redirect", [arg1])
 	end
