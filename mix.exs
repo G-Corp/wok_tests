@@ -18,7 +18,7 @@ defmodule Wok.Tests.Mixfile do
     [ 
       {:bucs, ~r/.*/, git: "https://github.com/botsunit/bucs.git", tag: "0.0.1"},  
       {:wok_http_adapter, ~r/.*/, git: "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", tag: "0.0.4"},  
-      {:wok_message_handler, ~r/.*/, git: "git@gitlab.botsunit.com:msaas/wok_message_handler.git", tag: "0.2.0"},  
+      {:wok_message_handler, ~r/.*/, git: "git@gitlab.botsunit.com:msaas/wok_message_handler.git", tag: "0.2.1"},  
       {:doteki, ~r/.*/, git: "https://github.com/botsunit/doteki.git", tag: "0.0.1"},  
       {:hackney, ">= 0.12.0"},
     ]
