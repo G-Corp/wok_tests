@@ -15,5 +15,6 @@ ebin
 erl_crash.dump
 log
 queues
-test/TEST-*.xml
-xrefr
+test/eunit/
+_build/
+
