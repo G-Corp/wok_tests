@@ -4,7 +4,7 @@ defmodule Wok.Tests.Mixfile do
   def project do
     [
       app: :wok_tests,
-      version: "0.1.2",
+      version: "0.2.0",
       elixir: "~> 1.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -14,17 +14,17 @@ defmodule Wok.Tests.Mixfile do
 
   def application do
     [
-       applications: [:kernel, :stdlib],
+       applications: [],
        env: []
     ]
   end
 
   defp deps do
     [
-      {:bucs, git: "https://github.com/botsunit/bucs.git", branch: "master"},
-      {:wok_http_adapter, git: "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", branch: "master"},
-      {:wok_message_handler, git: "git@gitlab.botsunit.com:msaas/wok_message_handler.git", branch: "master"},
-      {:doteki, git: "https://github.com/botsunit/doteki.git", branch: "master"},
+      {:bucs, git: "https://github.com/botsunit/bucs.git", tag: "0.0.2"},
+      {:wok_http_adapter, git: "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", tag: "0.1.0"},
+      {:wok_message_handler, git: "git@gitlab.botsunit.com:msaas/wok_message_handler.git", tag: "0.3.0"},
+      {:doteki, git: "https://github.com/botsunit/doteki.git", tag: "0.1.0"},
       {:hackney, "~> 1.6.0"}    
     ]
   end
