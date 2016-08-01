@@ -73,7 +73,7 @@ provide(_Topic, From, To, Headers, Message) ->
                                                  Headers, 
                                                  Message, 
                                                  <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
-                  end, [], [maps:get(X, Paths) || X <- Services])
+                  end, [], [maps:get(X, Paths) || {X, _} <- Services])
   end.
 
 build_message(Map) when is_map(Map) ->
