@@ -13,8 +13,8 @@ run(Method, URL, Headers, Body, Options) ->
   case find_controler(
          bucs:to_atom(string:to_upper(bucs:to_string(Method))),
          URL) of
-    {{Handler, Function}, URL1, Bindings, Query} -> 
-      Req = wok_test_req:new(bucs:to_binary(string:to_upper(bucs:to_string(Method))), 
+    {{Handler, Function}, URL1, Bindings, Query} ->
+      Req = wok_test_req:new(bucs:to_binary(string:to_upper(bucs:to_string(Method))),
                              URL1, Headers, Body, Query, Bindings, Cookies, Files,
                              LocalState, GlobalState, CustomData),
       Req1 = erlang:apply(Handler, Function, [Req]),
@@ -24,18 +24,18 @@ run(Method, URL, Headers, Body, Options) ->
   end.
 
 find_controler(Method, URL) ->
-  {URL1, 
-   Path1, 
+  {URL1,
+   Path1,
    Query1} = case http_uri:parse(bucs:to_string(URL)) of
                {ok, {_, _, _, _, Path, Query}} -> {URL, string:tokens(bucs:to_string(Path), "/"), Query};
                {ok, {_, _, _, _, Path, Query, _}} -> {URL, string:tokens(bucs:to_string(Path), "/"), Query};
-               _ -> 
+               _ ->
                  case http_uri:parse("http://example.com" ++ bucs:to_string(URL)) of
                    {ok, {_, _, _, _, Path, Query}} -> {"http://example.com" ++ bucs:to_string(URL),
-                                                       string:tokens(bucs:to_string(Path), "/"), 
+                                                       string:tokens(bucs:to_string(Path), "/"),
                                                        Query};
                    {ok, {_, _, _, _, Path, Query, _}} -> {"http://example.com" ++ bucs:to_string(URL),
-                                                          string:tokens(bucs:to_string(Path), "/"), 
+                                                          string:tokens(bucs:to_string(Path), "/"),
                                                           Query};
                    _ -> {URL, string:tokens(bucs:to_string(URL), "/"), []}
                  end
@@ -49,7 +49,7 @@ find_controler(Method, URL) ->
                       if
                         length(RouteTokens) == length(Path1) ->
                           Bindings = lists:flatmap(fun
-                                                     ({X,X}) -> []; 
+                                                     ({X, X}) -> [];
                                                      ({":" ++ X, Y}) -> [{bucs:to_atom(X), bucs:to_binary(Y)}];
                                                      ({_, _}) -> [notmatch]
                                                    end, lists:zip(RouteTokens, Path1)),

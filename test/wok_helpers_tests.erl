@@ -4,9 +4,9 @@
 
 assert_test_() ->
   {setup,
-   fun() -> 
+   fun() ->
        meck:new(wok_http_handler, [non_strict]),
-       meck:expect(wok_http_handler, routes, 
+       meck:expect(wok_http_handler, routes,
                    fun() ->
                      {
                        [{
@@ -14,23 +14,23 @@ assert_test_() ->
                          {'PATCH', {fake_rest_handler, update}},
                          {'PUT', {fake_rest_handler, update}},
                          {'GET', {fake_rest_handler, show}}
-                       ]},{
+                       ]}, {
                        "/api/users", [
                          {'POST', {fake_rest_handler, create}},
                          {'GET', {fake_rest_handler, index}}
-                       ]},{
+                       ]}, {
                        "/api/get", [
                          {'GET', {fake_rest_handler, get}}
-                       ]},{
+                       ]}, {
                        "/about", [
                          {'GET', {fake_rest_handler, about}}
-                       ]},{
+                       ]}, {
                        "/chat/:id/private/:idroom", [
                          {'POST', {fake_rest_handler, chat}}
-                       ]},{
+                       ]}, {
                        "/public/[...]", cowboy_static,
-                         {dir,"/tmp",
-                           [{mimetypes,cow_mimetypes,all},{default_file,"index.html"}]}
+                         {dir, "/tmp",
+                           [{mimetypes, cow_mimetypes, all}, {default_file, "index.html"}]}
                        }
                        ], #{static_path => "/tmp", static_route => "/public"}
                      }
@@ -45,21 +45,21 @@ assert_test_() ->
                        wok_req:set_response_body(Req, Body)
                    end)
    end,
-   fun(_) -> 
+   fun(_) ->
        meck:unload(wok_http_handler),
        meck:unload(fake_rest_handler)
    end,
    [
     fun() ->
         os:putenv("HTTP_TEST", "false"),
-        wok_tests:request(post, <<"/chat/123/private/456?name=John&mail=john.doe@example.com">>, [], <<>>, [], 
+        wok_tests:request(post, <<"/chat/123/private/456?name=John&mail=john.doe@example.com">>, [], <<>>, [],
                           fun(Resp) ->
                               wok_tests:assert_response_body(<<"id=123,idroom=456">>, Resp)
                           end)
     end,
     fun() ->
         os:putenv("HTTP_TEST", "false"),
-        wok_tests:request(post, <<"/missing/path">>, [], <<>>, [], 
+        wok_tests:request(post, <<"/missing/path">>, [], <<>>, [],
                           fun(Resp) ->
                               wok_tests:assert_request_not_found(Resp)
                           end)
@@ -80,7 +80,7 @@ assert_provide_test_() ->
            ]}
          ]}]),
        meck:new(dummy_service_handler, [non_strict]),
-       meck:expect(dummy_service_handler, my_action, 
+       meck:expect(dummy_service_handler, my_action,
                    fun(Req) ->
                        Req
                    end)
@@ -90,11 +90,11 @@ assert_provide_test_() ->
    end,
    [
     fun() ->
-        wok_tests:provide(test, 
-                          <<"from">>, 
-                          <<"my_service/my_controler/my_action">>, 
-                          [], 
-                          <<"message">>, 
+        wok_tests:provide(test,
+                          <<"from">>,
+                          <<"my_service/my_controler/my_action">>,
+                          [],
+                          <<"message">>,
                           fun(R) ->
                               wok_tests:assert(R =/= undefined)
                           end)

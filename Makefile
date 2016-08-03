@@ -1,22 +1,7 @@
-.PHONY: doc
+HAS_ELIXIR=1
+
 include bu.mk
 
-compile:
-	$(verbose) $(REBAR) compile
-
-tests:
-	$(verbose) $(REBAR) eunit
-
-doc:
-	$(verbose) $(REBAR) as doc edoc
+doc::
 	$(verbose) ${CP} _doc/* doc
-
-elixir:
-	$(verbose) $(REBAR) elixir generate_mix
-	$(verbose) $(REBAR) elixir generate_lib
-
-dist: compile tests elixir doc
-
-distclean:
-	$(verbose) rm -rf _build rebar.lock mix.lock test/eunit deps
 

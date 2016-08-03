@@ -229,8 +229,10 @@ Example
  wok_tests:request(get, "http://localhost:8080", [], "", [], fun(Response) -> ... end)
 ```
 
-{timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}} | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
-{sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()} | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
+{timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}}
+| {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
+{sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()}
+| {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
 
 <a name="request-3"></a>
 

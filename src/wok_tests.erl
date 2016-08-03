@@ -18,7 +18,7 @@
         ]).
 
 % Assert
--export([assert/1 
+-export([assert/1
          , assert_not/1
          , assert_equal/2
          , assert_not_equal/2
@@ -60,18 +60,18 @@ provide(_Topic, From, To, Headers, Message, Fun) ->
 provide(_Topic, From, To, Headers, Message) ->
   case os:getenv("KAFKA_TEST") of
     "true" -> [];
-    _ -> 
+    _ ->
       Paths = wok_message_path:get_message_path_handlers(
                 doteki:get_env([wok, messages, services],
                                doteki:get_env([wok, messages, controlers], []))),
       Services = wok_message_path:get_message_handlers(To, Paths),
       lists:foldl(fun({Handler, Function}, Acc) ->
-                      [erlang:apply(Handler, 
-                                    Function, 
-                                    [wok_msg:new(From, 
-                                                 To, 
-                                                 Headers, 
-                                                 Message, 
+                      [erlang:apply(Handler,
+                                    Function,
+                                    [wok_msg:new(From,
+                                                 To,
+                                                 Headers,
+                                                 Message,
                                                  <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
                   end, [], [maps:get(X, Paths) || {X, _} <- Services])
   end.
@@ -92,8 +92,10 @@ build_message(Map) when is_map(Map) ->
 % wok_tests:request(get, "http://localhost:8080", [], "", [], fun(Response) -> ... end)
 % </pre>
 %
-% {timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}} | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
-% {sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()} | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
+% {timeout, timeout()} | {connect_timeout, timeout()} | {ssl, ssloptions()} | {essl, ssloptions()} | {autoredirect, boolean()} | {proxy_auth, {userstring(), passwordstring()}}
+% | {version, http_version()} | {relaxed, boolean()} | {url_encode, boolean()}
+% {sync, boolean()} | {stream, stream_to()} | {body_format, body_format()} | {full_result, boolean()} | {headers_as_is, boolean() | {socket_opts, socket_opts()}
+% | {receiver, receiver()}, {ipv6_host_with_brackets, boolean()}}
 % @end
 request(Method, URL) ->
   request(Method, URL, [], <<>>, []).
@@ -117,7 +119,7 @@ request(Method, URL, Headers, Body, Options) when is_atom(Method),
           case hackney:body(ClientRef) of
             {ok, RespBody} ->
               {ok, StatusCode, RespHeaders, RespBody};
-            E -> 
+            E ->
               E
           end;
         {ok, StatusCode, RespHeaders} ->
@@ -135,17 +137,17 @@ request(Method, URL, Headers, Body, Options, Fun) when is_atom(Method),
                                                        is_binary(Body),
                                                        is_list(Options),
                                                        is_function(Fun) ->
-  Fun(request(Method, URL, Headers,Body, Options)).
+  Fun(request(Method, URL, Headers, Body, Options)).
 
 follow(Method, URL) ->
   case http_uri:parse(bucs:to_string(URL)) of
     {ok, {Scheme, UserInfo, Host, Port, _, _}} ->
       Base = bucs:to_binary(
                case UserInfo of
-                 [] -> bucs:to_string(Scheme) ++ "://" ++ 
+                 [] -> bucs:to_string(Scheme) ++ "://" ++
                        Host ++ ":" ++ bucs:to_string(Port);
-                 _ -> bucs:to_string(Scheme) ++ "://" ++ 
-                      UserInfo ++ "@" ++ 
+                 _ -> bucs:to_string(Scheme) ++ "://" ++
+                      UserInfo ++ "@" ++
                       Host ++ ":" ++ bucs:to_string(Port)
                end),
       request(Method, URL, fun({ok, StatusCode, RespHeaders, <<>>}) when StatusCode >= 300, StatusCode < 400 ->
