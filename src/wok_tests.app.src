@@ -1,6 +1,6 @@
 {application, wok_tests, [
 	{description, "Wok tests module"},
-	{vsn, "0.2.2"},
+	{vsn, "0.2.3"},
 	{modules, []},
 	{registered, []},
 	{applications, [kernel,stdlib]}
