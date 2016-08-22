@@ -1,11 +1,11 @@
-%{"bucs": {:hex, :bucs, "0.1.7", "12735681657c19f32218cefde65ca8ccd905eb2239ceda82318ec3eec714688a", [:rebar3, :mix, :make], []},
+%{"bucs": {:hex, :bucs, "0.1.8", "8293d4aa64777fe7e3dc3a9e573a86dbfcbd434d6ce685a9f445f8560cacbb04", [:rebar3, :mix, :make], []},
   "certifi": {:hex, :certifi, "0.4.0", "a7966efb868b179023618d29a407548f70c52466bf1849b9e8ebd0e34b7ea11f", [:rebar3], []},
-  "doteki": {:hex, :doteki, "0.1.10", "b9b28f1e854a45f2be8542b4d076064cf8d65b0a9b3efcf196c6cfe46ef6af47", [:rebar3, :mix, :make], [{:bucs, "~> 0.1.7", [hex: :bucs, optional: false]}]},
+  "doteki": {:hex, :doteki, "0.1.11", "8b6c7ab6c4f1cadb263ac11f67a4ec8e574a8af815b687354f34358c46f13024", [:rebar3, :mix, :make], [{:bucs, "~> 0.1.8", [hex: :bucs, optional: false]}]},
   "hackney": {:hex, :hackney, "1.6.1", "ddd22d42db2b50e6a155439c8811b8f6df61a4395de10509714ad2751c6da817", [:rebar3], [{:certifi, "0.4.0", [hex: :certifi, optional: false]}, {:idna, "1.2.0", [hex: :idna, optional: false]}, {:metrics, "1.0.1", [hex: :metrics, optional: false]}, {:mimerl, "1.0.2", [hex: :mimerl, optional: false]}, {:ssl_verify_fun, "1.1.0", [hex: :ssl_verify_fun, optional: false]}]},
   "idna": {:hex, :idna, "1.2.0", "ac62ee99da068f43c50dc69acf700e03a62a348360126260e87f2b54eced86b2", [:rebar3], []},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], []},
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], []},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0", "edee20847c42e379bf91261db474ffbe373f8acb56e9079acb6038d4e0bf414f", [:rebar, :make], []},
-  "uuid": {:git, "https://github.com/botsunit/erlang-uuid.git", "5c83fbdd3b6ef8e2d1e2764c053bf9eab9d94173", [branch: "master"]},
-  "wok_http_adapter": {:git, "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", "1bb12ea5a3a60c9357903b1299ff3523817d8586", [tag: "0.1.1"]},
-  "wok_message_handler": {:git, "git@gitlab.botsunit.com:msaas/wok_message_handler.git", "5126cd53d1e91475e169e688f01239e08f973674", [branch: "master"]}}
+  "uuid": {:git, "https://github.com/botsunit/erlang-uuid.git", "582cab69bdff5c56ca3907226ed7dca8663b5701", [tag: "0.6.0"]},
+  "wok_http_adapter": {:git, "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", "f846a6d41cfd01ec933a0488c7e97cf8a90e6677", [tag: "0.1.2"]},
+  "wok_message_handler": {:git, "git@gitlab.botsunit.com:msaas/wok_message_handler.git", "56d05fa1cfe55ebea3672b125826b9dc94075750", [tag: "0.5.0"]}}
