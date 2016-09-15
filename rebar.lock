@@ -1,6 +1,6 @@
-[{<<"bucs">>,{pkg,<<"bucs">>,<<"0.1.8">>},0},
+[{<<"bucs">>,{pkg,<<"bucs">>,<<"0.1.9">>},0},
  {<<"certifi">>,{pkg,<<"certifi">>,<<"0.4.0">>},1},
- {<<"doteki">>,{pkg,<<"doteki">>,<<"0.1.11">>},0},
+ {<<"doteki">>,{pkg,<<"doteki">>,<<"0.1.13">>},0},
  {<<"hackney">>,{pkg,<<"hackney">>,<<"1.6.1">>},0},
  {<<"idna">>,{pkg,<<"idna">>,<<"1.2.0">>},1},
  {<<"metrics">>,{pkg,<<"metrics">>,<<"1.0.1">>},1},
@@ -16,5 +16,5 @@
   0},
  {<<"wok_message_handler">>,
   {git,"git@gitlab.botsunit.com:msaas/wok_message_handler.git",
-       {ref,"56d05fa1cfe55ebea3672b125826b9dc94075750"}},
+       {ref,"8e253fd88f1a1a19647d3af560e6338e7ab693b2"}},
   0}].
