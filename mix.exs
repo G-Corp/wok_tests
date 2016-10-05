@@ -26,7 +26,7 @@ defmodule Wok.Tests.Mixfile do
       {:wok_http_adapter, git: "git@gitlab.botsunit.com:msaas/wok_http_adapter.git", tag: "0.1.2"},
       {:wok_message_handler, git: "git@gitlab.botsunit.com:msaas/wok_message_handler.git", tag: "0.5.1"},
       {:doteki, "~> 0.1.13"},
-      {:hackney, "~> 1.6.0"}    
+      {:hackney, git: "https://github.com/botsunit/hackney.git", branch: "master"}    
     ]
   end
 
