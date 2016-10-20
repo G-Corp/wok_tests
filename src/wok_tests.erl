@@ -68,16 +68,16 @@ provide(_Topic, From, To, Headers, Message) ->
       lists:foldl(fun({Handler, Function}, Acc) ->
                       [erlang:apply(Handler,
                                     Function,
-                                    [wok_msg:new(From,
-                                                 To,
-                                                 Headers,
-                                                 Message,
-                                                 <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
+                                    [wok_message:new_req(From,
+                                                         To,
+                                                         Headers,
+                                                         Message,
+                                                         <<"2591f795-7ed0-4668-99fb-7cddd4c3b90d">>)])|Acc]
                   end, [], [maps:get(X, Paths) || {X, _} <- Services])
   end.
 
 build_message(Map) when is_map(Map) ->
-  wok_msg:new(
+  wok_message:new_req(
     maps:get(from, Map, <<"from">>),
     maps:get(to, Map, <<"to">>),
     maps:get(headers, Map, []),

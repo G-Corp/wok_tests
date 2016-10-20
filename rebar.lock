@@ -11,16 +11,4 @@
        {ref,"acb2181d9e1b18139237ee748ab3b3590dadc5eb"}},
   1},
  {<<"mimerl">>,{pkg,<<"mimerl">>,<<"1.0.2">>},1},
- {<<"ssl_verify_fun">>,{pkg,<<"ssl_verify_fun">>,<<"1.1.1">>},1},
- {<<"uuid">>,
-  {git,"https://github.com/botsunit/erlang-uuid.git",
-       {ref,"582cab69bdff5c56ca3907226ed7dca8663b5701"}},
-  1},
- {<<"wok_http_adapter">>,
-  {git,"git@gitlab.botsunit.com:msaas/wok_http_adapter.git",
-       {ref,"f846a6d41cfd01ec933a0488c7e97cf8a90e6677"}},
-  0},
- {<<"wok_message_handler">>,
-  {git,"git@gitlab.botsunit.com:msaas/wok_message_handler.git",
-       {ref,"8e253fd88f1a1a19647d3af560e6338e7ab693b2"}},
-  0}].
+ {<<"ssl_verify_fun">>,{pkg,<<"ssl_verify_fun">>,<<"1.1.1">>},1}].

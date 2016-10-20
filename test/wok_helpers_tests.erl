@@ -90,7 +90,7 @@ assert_provide_test_() ->
    end,
    [
     fun() ->
-        wok_tests:provide(test,
+        wok_tests:provide(<<"topic">>,
                           <<"from">>,
                           <<"my_service/my_controler/my_action">>,
                           [],
