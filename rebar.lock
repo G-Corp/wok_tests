@@ -1,6 +1,6 @@
-[{<<"bucs">>,{pkg,<<"bucs">>,<<"1.0.0">>},0},
+[{<<"bucs">>,{pkg,<<"bucs">>,<<"1.0.1">>},0},
  {<<"certifi">>,{pkg,<<"certifi">>,<<"0.7.0">>},1},
- {<<"doteki">>,{pkg,<<"doteki">>,<<"1.0.0">>},0},
+ {<<"doteki">>,{pkg,<<"doteki">>,<<"1.0.1">>},0},
  {<<"hackney">>,
   {git,"https://github.com/botsunit/hackney.git",
        {ref,"23888be6e5b1c44b18d7af7755b97a07726534bf"}},

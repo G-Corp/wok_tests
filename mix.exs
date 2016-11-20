@@ -22,8 +22,8 @@ defmodule Wok.Tests.Mixfile do
 
   defp deps do
     [
-      {:bucs, "~> 1.0.0"},
-      {:doteki, "~> 1.0.0"},
+      {:bucs, "~> 1.0.1"},
+      {:doteki, "~> 1.0.1"},
       {:hackney, git: "https://github.com/botsunit/hackney.git", branch: "master"}    
     ]
   end
