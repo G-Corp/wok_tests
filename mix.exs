@@ -8,8 +8,8 @@ defmodule Wok.Tests.Mixfile do
       elixir: "~> 1.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps,
-      aliases: aliases
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -22,8 +22,8 @@ defmodule Wok.Tests.Mixfile do
 
   defp deps do
     [
-      {:bucs, "~> 1.0.3"},
-      {:doteki, "~> 1.0.3"},
+      {:bucs, "~> 1.0.6"},
+      {:doteki, "~> 1.0.5"},
       {:hackney, git: "https://github.com/botsunit/hackney.git", branch: "master"}    
     ]
   end
