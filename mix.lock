@@ -1,4 +1,4 @@
-%{"bucs": {:hex, :bucs, "1.0.6", "b0467388b5adaabb4d8726595b7b754a961bfe80f0ccac88f58e1afea32be6d0", [:make, :mix, :rebar3], []},
+%{"bucs": {:hex, :bucs, "1.0.8", "24b80d65d8ecb2ea2ca05cfb1e5c80c4fec9696b1b2d27515fd692520d184200", [:make, :mix, :rebar3], []},
   "certifi": {:hex, :certifi, "0.7.0", "861a57f3808f7eb0c2d1802afeaae0fa5de813b0df0979153cbafcd853ababaf", [:rebar3], []},
   "doteki": {:hex, :doteki, "1.0.5", "1e719dbe540f84ea87c6dc92be4b6f706a42b08067af519de13b6efc27243a49", [:make, :mix, :rebar3], [{:bucs, "~> 1.0.6", [hex: :bucs, optional: false]}]},
   "hackney": {:git, "https://github.com/botsunit/hackney.git", "23888be6e5b1c44b18d7af7755b97a07726534bf", [branch: "master"]},
